@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>Muscle Zone Fitness Gym — Suratgarh's Premier Heavy Iron & Transformation Studio</title>
   <meta name="description" content="Suratgarh's premier gym for heavy powerlifting, bodybuilding, certified personal training, dedicated women batches, and customized diet plans. Claim your Free 1-Day Trial Pass today!">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,36 +10,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    /* ─── RESET & ROOT DESIGN TOKENS ─── */
+    /* ─── RESET & CSS DESIGN TOKENS ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; width: 100%; overflow-x: hidden; }
     body {
       width: 100%;
       overflow-x: hidden;
       background-color: #07090e;
       color: #f1f5f9;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.6;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
-      padding-bottom: 90px; /* Space for fixed mobile dock */
+      padding-bottom: 110px; /* Generous space for fixed mobile bottom dock */
     }
 
     :root {
       --bg-dark: #07090e;
       --bg-surface: #0e131d;
-      --bg-card: rgba(17, 24, 39, 0.75);
-      --bg-card-hover: rgba(24, 34, 53, 0.9);
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-card-hover: rgba(24, 34, 53, 0.95);
       
       --crimson: #ff2a5f;
-      --crimson-glow: rgba(255, 42, 95, 0.35);
+      --crimson-glow: rgba(255, 42, 95, 0.4);
       --cyan: #00f0ff;
-      --cyan-glow: rgba(0, 240, 255, 0.3);
+      --cyan-glow: rgba(0, 240, 255, 0.35);
       --gold: #f59e0b;
       --whatsapp-green: #25d366;
       
       --border-glass: rgba(255, 255, 255, 0.1);
-      --border-focus: rgba(0, 240, 255, 0.4);
-      --border-crimson: rgba(255, 42, 95, 0.4);
+      --border-focus: rgba(0, 240, 255, 0.45);
+      --border-crimson: rgba(255, 42, 95, 0.45);
       
       --text-main: #ffffff;
       --text-muted: #94a3b8;
@@ -51,7 +51,7 @@
       --radius-lg: 24px;
       --radius-full: 9999px;
       
-      --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.6);
+      --shadow-card: 0 14px 36px rgba(0, 0, 0, 0.6);
       --shadow-glow-crimson: 0 8px 30px var(--crimson-glow);
       --shadow-glow-cyan: 0 8px 30px var(--cyan-glow);
     }
@@ -59,19 +59,18 @@
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; height: auto; display: block; }
     button { font-family: inherit; cursor: pointer; border: none; outline: none; }
-    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .container { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 18px; }
 
-    /* ─── LUXURY GLOWING NAVBAR ─── */
+    /* ─── NAVBAR ─── */
     .navbar {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      background: rgba(7, 9, 14, 0.85);
+      background: rgba(7, 9, 14, 0.9);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-glass);
-      padding: 14px 0;
-      transition: all 0.3s ease;
+      padding: 12px 0;
     }
     .nav-wrapper { display: flex; align-items: center; justify-content: space-between; }
     .nav-brand {
@@ -79,21 +78,21 @@
       align-items: center;
       gap: 10px;
       font-family: var(--font-heading);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: #fff;
     }
     .brand-icon {
-      width: 36px; height: 36px;
+      width: 32px; height: 32px;
       background: linear-gradient(135deg, var(--crimson), #b91c1c);
       border-radius: var(--radius-sm);
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 15px var(--crimson-glow);
     }
-    .nav-menu { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-menu { display: flex; align-items: center; gap: 28px; list-style: none; }
     .nav-link {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-muted);
       transition: color 0.2s ease;
@@ -102,31 +101,28 @@
     .nav-cta-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: linear-gradient(135deg, var(--crimson), #e11d48);
       color: #fff;
-      padding: 10px 22px;
+      padding: 8px 18px;
       border-radius: var(--radius-full);
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 700;
       box-shadow: var(--shadow-glow-crimson);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease;
     }
-    .nav-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 35px var(--crimson-glow); }
     .nav-cta-btn:active { transform: scale(0.96); }
 
     @media (max-width: 860px) {
       .nav-menu { display: none; }
     }
 
-    /* ─── HERO SECTION (CINEMATIC & ULTRA-RICH) ─── */
+    /* ─── HERO SECTION (MOBILE-OPTIMIZED VIEWPORT) ─── */
     .hero {
       position: relative;
-      min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      padding: 130px 0 60px;
+      padding: 95px 0 36px;
       overflow: hidden;
+      background: #07090e;
     }
     .hero-bg-photo {
       position: absolute;
@@ -134,43 +130,42 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: center 25%;
       z-index: 1;
-      opacity: 0.42;
-      filter: saturate(1.2) contrast(1.1);
+      opacity: 0.38;
+      filter: saturate(1.15) contrast(1.1);
     }
     .hero-overlay {
       position: absolute;
       inset: 0;
       z-index: 2;
-      background: linear-gradient(90deg, #07090e 0%, rgba(7, 9, 14, 0.88) 45%, rgba(7, 9, 14, 0.4) 100%);
+      background: linear-gradient(180deg, rgba(7, 9, 14, 0.4) 0%, rgba(7, 9, 14, 0.85) 60%, #07090e 100%);
     }
     .hero-grid {
       position: relative;
       z-index: 10;
-      display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 40px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255, 42, 95, 0.12);
+      gap: 8px;
+      background: rgba(255, 42, 95, 0.14);
       border: 1px solid var(--border-crimson);
       backdrop-filter: blur(12px);
-      padding: 6px 18px;
+      padding: 5px 14px;
       border-radius: var(--radius-full);
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       font-weight: 700;
       color: #ff6b8b;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
+      width: fit-content;
     }
     .pulse-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--crimson);
       box-shadow: 0 0 10px var(--crimson);
@@ -183,153 +178,93 @@
 
     .hero-title {
       font-family: var(--font-heading);
-      font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+      font-size: clamp(2.1rem, 7vw, 3.8rem);
       font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
       text-transform: uppercase;
     }
     .hero-title .text-glow {
       color: var(--cyan);
-      text-shadow: 0 0 30px var(--cyan-glow);
+      text-shadow: 0 0 25px var(--cyan-glow);
     }
     .hero-title .text-red {
       color: var(--crimson);
-      text-shadow: 0 0 30px var(--crimson-glow);
+      text-shadow: 0 0 25px var(--crimson-glow);
     }
     .hero-desc {
-      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      font-size: 0.96rem;
       color: #cbd5e1;
-      line-height: 1.6;
-      margin-bottom: 32px;
-      max-width: 580px;
+      line-height: 1.55;
+      margin-bottom: 24px;
+      max-width: 540px;
     }
 
-    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; }
+    .hero-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
     .btn-hero-primary {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       background: linear-gradient(135deg, var(--crimson), #e11d48);
       color: #fff;
-      padding: 16px 32px;
+      padding: 15px 24px;
       border-radius: var(--radius-full);
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 800;
       box-shadow: var(--shadow-glow-crimson);
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
     }
-    .btn-hero-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px var(--crimson-glow);
-    }
+    .btn-hero-primary:active { transform: scale(0.97); }
     .btn-hero-secondary {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.07);
       border: 1px solid var(--border-glass);
-      backdrop-filter: blur(10px);
       color: #fff;
-      padding: 16px 28px;
+      padding: 13px 20px;
       border-radius: var(--radius-full);
-      font-size: 1rem;
+      font-size: 0.92rem;
       font-weight: 700;
-      transition: all 0.25s ease;
-    }
-    .btn-hero-secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: var(--cyan);
     }
 
     .hero-stats {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border-glass);
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
     }
     .stat-item h3 {
       font-family: var(--font-heading);
-      font-size: 1.8rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: #fff;
-      line-height: 1;
+      line-height: 1.1;
     }
     .stat-item p {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Right Showcase Card */
-    .hero-showcase {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-card);
-    }
-    .hero-showcase-img {
-      width: 100%;
-      height: 340px;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      position: relative;
-      margin-bottom: 18px;
-    }
-    .hero-showcase-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    .hero-showcase-tag {
-      position: absolute;
-      top: 14px; left: 14px;
-      background: rgba(7, 9, 14, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-glass);
-      padding: 6px 14px;
-      border-radius: var(--radius-full);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--cyan);
-    }
-    .showcase-info h4 {
-      font-family: var(--font-heading);
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    .showcase-info p {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 992px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-showcase { display: none; }
-      .hero-overlay { background: linear-gradient(180deg, rgba(7, 9, 14, 0.7) 0%, rgba(7, 9, 14, 0.95) 100%); }
-    }
-    @media (max-width: 600px) {
-      .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-      .hero-actions { flex-direction: column; width: 100%; }
-      .btn-hero-primary, .btn-hero-secondary { width: 100%; justify-content: center; }
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     /* ─── SECTION HEADERS ─── */
-    section { padding: 90px 0; position: relative; }
+    section { padding: 48px 0; position: relative; }
     .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 56px;
+      text-align: left;
+      margin-bottom: 28px;
     }
     .section-pill {
       display: inline-flex;
@@ -337,52 +272,51 @@
       gap: 6px;
       background: rgba(0, 240, 255, 0.1);
       border: 1px solid var(--border-focus);
-      padding: 6px 16px;
+      padding: 4px 12px;
       border-radius: var(--radius-full);
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 800;
       color: var(--cyan);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
     }
     .section-title {
       font-family: var(--font-heading);
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-size: clamp(1.6rem, 5.5vw, 2.2rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 14px;
+      line-height: 1.18;
+      margin-bottom: 8px;
     }
     .section-subtitle {
-      font-size: 1.02rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    /* ─── 21ST.DEV MODULE: INTERACTIVE BMI & CALORIE CALCULATOR ─── */
+    /* ─── INTERACTIVE BMI & CALORIE CALCULATOR ─── */
     .calculator-box {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 40px;
+      padding: 22px 18px;
       backdrop-filter: blur(20px);
       box-shadow: var(--shadow-card);
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 40px;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
-    .calc-inputs { display: flex; flex-direction: column; gap: 20px; }
+    .calc-inputs { display: flex; flex-direction: column; gap: 16px; }
     .calc-field label {
       display: flex;
       justify-content: space-between;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #cbd5e1;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .calc-field label span { color: var(--cyan); font-family: var(--font-heading); font-size: 1.05rem; }
+    .calc-field label span { color: var(--cyan); font-family: var(--font-heading); font-size: 1rem; }
     .calc-slider {
       width: 100%;
       height: 8px;
@@ -393,20 +327,20 @@
     }
     .calc-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 24px; height: 24px;
+      width: 22px; height: 22px;
       border-radius: 50%;
       background: var(--cyan);
-      box-shadow: 0 0 15px var(--cyan-glow);
+      box-shadow: 0 0 12px var(--cyan-glow);
       cursor: pointer;
     }
-    .calc-goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 6px; }
+    .calc-goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
     .goal-btn {
       background: #1e293b;
       border: 1px solid var(--border-glass);
       color: var(--text-muted);
-      padding: 12px 10px;
+      padding: 10px 6px;
       border-radius: var(--radius-sm);
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-align: center;
       transition: all 0.2s ease;
@@ -419,323 +353,301 @@
     }
 
     .calc-result-card {
-      background: rgba(10, 14, 23, 0.9);
-      border: 1px solid var(--border-glass);
+      background: rgba(10, 14, 23, 0.95);
+      border: 1px solid var(--border-focus);
       border-radius: var(--radius-md);
-      padding: 32px;
+      padding: 20px 16px;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
     .bmi-gauge-val {
       font-family: var(--font-heading);
-      font-size: 3.6rem;
+      font-size: 3rem;
       font-weight: 800;
       color: var(--cyan);
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .bmi-status-pill {
       display: inline-block;
-      padding: 4px 14px;
+      padding: 4px 12px;
       border-radius: var(--radius-full);
       background: rgba(0, 240, 255, 0.15);
       color: var(--cyan);
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
     .calorie-recom {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       color: #cbd5e1;
-      margin-bottom: 24px;
-      line-height: 1.5;
+      margin-bottom: 16px;
+      line-height: 1.45;
     }
     .btn-calc-wa {
       width: 100%;
       background: var(--whatsapp-green);
       color: #fff;
-      padding: 14px 20px;
+      padding: 13px 16px;
       border-radius: var(--radius-full);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-      transition: transform 0.2s ease;
-    }
-    .btn-calc-wa:hover { transform: translateY(-2px); }
-
-    @media (max-width: 768px) {
-      .calculator-box { grid-template-columns: 1fr; padding: 24px; }
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
     }
 
-    /* ─── 6 HEAVY TRAINING ZONES (BENTO GRID WITH REAL PHOTOS) ─── */
+    /* ─── 6 HEAVY TRAINING ZONES (PERFECT CARD ASPECT RATIO) ─── */
     .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
     .bento-card {
-      position: relative;
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
       overflow: hidden;
       backdrop-filter: blur(16px);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-    .bento-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--border-focus);
       box-shadow: var(--shadow-card);
     }
     .bento-img-wrap {
       width: 100%;
-      height: 220px;
+      height: 200px;
       overflow: hidden;
       position: relative;
     }
     .bento-img-wrap img {
       width: 100%; height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      object-position: center;
     }
-    .bento-card:hover .bento-img-wrap img { transform: scale(1.08); }
     .bento-tag {
       position: absolute;
-      bottom: 12px; left: 14px;
-      background: rgba(7, 9, 14, 0.85);
+      bottom: 10px; left: 12px;
+      background: rgba(7, 9, 14, 0.88);
       backdrop-filter: blur(8px);
       border: 1px solid var(--border-glass);
-      padding: 4px 12px;
+      padding: 4px 10px;
       border-radius: var(--radius-full);
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 800;
       color: var(--cyan);
     }
     .bento-content {
-      padding: 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      padding: 18px 16px;
     }
     .bento-content h3 {
-      font-family: var(--font-heading);
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-    .bento-content p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    @media (max-width: 900px) {
-      .bento-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ─── INTERACTIVE BATCH TIMINGS & SCHEDULE ─── */
-    .schedule-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
-    }
-    .tab-btn {
-      background: #131b29;
-      border: 1px solid var(--border-glass);
-      color: var(--text-muted);
-      padding: 12px 24px;
-      border-radius: var(--radius-full);
-      font-size: 0.92rem;
-      font-weight: 700;
-      transition: all 0.2s ease;
-    }
-    .tab-btn.active {
-      background: linear-gradient(135deg, var(--cyan), #0284c7);
-      color: #000;
-      border-color: var(--cyan);
-      box-shadow: var(--shadow-glow-cyan);
-    }
-
-    .batch-cards-wrap {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .batch-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 30px;
-      backdrop-filter: blur(16px);
-      position: relative;
-    }
-    .batch-card.highlight {
-      border-color: var(--crimson);
-      box-shadow: var(--shadow-glow-crimson);
-    }
-    .batch-time {
-      font-family: var(--font-heading);
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    .batch-name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--cyan);
-      margin-bottom: 14px;
-    }
-    .batch-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
-      font-size: 0.88rem;
-      color: #cbd5e1;
-    }
-    .batch-features li { display: flex; align-items: center; gap: 8px; }
-    .batch-features li span { color: var(--cyan); }
-
-    @media (max-width: 860px) {
-      .batch-cards-wrap { grid-template-columns: 1fr; }
-    }
-
-    /* ─── REAL TRANSFORMATION STORY CARDS ─── */
-    .transform-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .transform-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      backdrop-filter: blur(16px);
-    }
-    .transform-img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-    }
-    .transform-body { padding: 24px; }
-    .transform-stat-tag {
-      display: inline-block;
-      background: rgba(37, 211, 102, 0.15);
-      border: 1px solid rgba(37, 211, 102, 0.3);
-      color: var(--whatsapp-green);
-      font-size: 0.78rem;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-    .transform-body h4 {
       font-family: var(--font-heading);
       font-size: 1.2rem;
       font-weight: 800;
       color: #fff;
       margin-bottom: 6px;
     }
-    .transform-body p {
+    .bento-content p {
       font-size: 0.88rem;
       color: var(--text-muted);
       line-height: 1.5;
     }
 
-    @media (max-width: 860px) {
-      .transform-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ─── MEMBERSHIP PRICING MATRIX ─── */
-    .pricing-grid {
+    /* ─── INTERACTIVE BATCH TIMINGS COMPONENT ─── */
+    .batch-nav-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      align-items: stretch;
+      gap: 6px;
+      background: #111827;
+      padding: 6px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      margin-bottom: 18px;
     }
-    .price-card {
+    .batch-tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      padding: 10px 4px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .batch-tab-btn.active {
+      background: var(--cyan);
+      color: #000;
+      box-shadow: var(--shadow-glow-cyan);
+    }
+
+    .batch-display-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-lg);
+      padding: 24px 18px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-card);
+    }
+    .batch-time-val {
+      font-family: var(--font-heading);
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .batch-title-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 14px;
+    }
+    .batch-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+    }
+    .batch-features-list li { display: flex; align-items: center; gap: 8px; }
+    .batch-features-list li span { color: var(--whatsapp-green); font-weight: 800; }
+
+    /* ─── REAL TRANSFORMATION STORIES (BESPOKE IMAGES) ─── */
+    .transform-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .transform-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 36px 28px;
-      backdrop-filter: blur(20px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
     }
-    .price-card.popular {
-      border-color: var(--crimson);
-      background: rgba(26, 17, 28, 0.85);
+    .transform-img-wrap {
+      width: 100%;
+      height: 230px;
+      overflow: hidden;
+    }
+    .transform-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .transform-body { padding: 18px 16px; }
+    .transform-stat-tag {
+      display: inline-block;
+      background: rgba(37, 211, 102, 0.15);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: var(--whatsapp-green);
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .transform-body h4 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .transform-body p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── MEMBERSHIP PRICING MATRIX ─── */
+    .pricing-toggle {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: #111827;
+      padding: 6px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      margin-bottom: 20px;
+    }
+    .toggle-btn {
+      background: transparent;
+      color: var(--text-muted);
+      padding: 10px 4px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .toggle-btn.active {
+      background: var(--crimson);
+      color: #fff;
       box-shadow: var(--shadow-glow-crimson);
-      transform: scale(1.04);
     }
-    .popular-tag {
-      position: absolute;
-      top: -14px; left: 50%;
-      transform: translateX(-50%);
+
+    .pricing-card-spotlight {
+      background: rgba(24, 18, 30, 0.95);
+      border: 1px solid var(--crimson);
+      border-radius: var(--radius-lg);
+      padding: 26px 18px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-glow-crimson);
+      position: relative;
+    }
+    .popular-pill {
+      display: inline-block;
       background: linear-gradient(135deg, var(--crimson), #b91c1c);
       color: #fff;
-      padding: 4px 16px;
+      padding: 3px 12px;
       border-radius: var(--radius-full);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
     }
-    .price-header h3 {
+    .price-name-val {
       font-family: var(--font-heading);
       font-size: 1.35rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
-    .price-val {
+    .price-amount-val {
       font-family: var(--font-heading);
-      font-size: 2.8rem;
+      font-size: 2.6rem;
       font-weight: 800;
       color: #fff;
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-    .price-val span { font-size: 1rem; font-weight: 600; color: var(--text-muted); }
-    .price-duration {
-      font-size: 0.82rem;
+    .price-amount-val span { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); }
+    .price-benefit-tag {
+      font-size: 0.8rem;
       color: var(--cyan);
       font-weight: 700;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
-    .price-features {
+    .price-features-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 32px;
-      font-size: 0.9rem;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 0.88rem;
       color: #cbd5e1;
     }
-    .price-features li { display: flex; align-items: center; gap: 10px; }
-    .price-features li svg { width: 18px; height: 18px; fill: var(--whatsapp-green); flex-shrink: 0; }
-    .btn-plan {
+    .price-features-list li { display: flex; align-items: center; gap: 8px; }
+    .price-features-list li svg { width: 16px; height: 16px; fill: var(--whatsapp-green); flex-shrink: 0; }
+    .btn-claim-plan {
       width: 100%;
+      background: linear-gradient(135deg, var(--crimson), #e11d48);
+      color: #fff;
       padding: 14px 20px;
       border-radius: var(--radius-full);
       font-size: 0.95rem;
@@ -744,57 +656,38 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.2s ease;
-    }
-    .btn-plan-primary {
-      background: linear-gradient(135deg, var(--crimson), #e11d48);
-      color: #fff;
       box-shadow: var(--shadow-glow-crimson);
-    }
-    .btn-plan-secondary {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-glass);
-      color: #fff;
-    }
-    .btn-plan:hover { transform: translateY(-2px); }
-
-    @media (max-width: 900px) {
-      .pricing-grid { grid-template-columns: 1fr; }
-      .price-card.popular { transform: none; }
     }
 
     /* ─── GOOGLE REVIEWS & TESTIMONIALS ─── */
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
     .review-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 28px;
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
       backdrop-filter: blur(16px);
     }
-    .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
     .rev-avatar {
-      width: 44px; height: 44px;
+      width: 38px; height: 38px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--cyan), #0284c7);
       color: #000;
       font-weight: 800;
+      font-size: 0.85rem;
       display: flex; align-items: center; justify-content: center;
     }
-    .rev-info h4 { font-size: 0.95rem; font-weight: 700; color: #fff; }
-    .rev-info span { font-size: 0.75rem; color: var(--gold); font-weight: 700; }
-    .rev-quote { font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; }
-
-    @media (max-width: 860px) {
-      .reviews-grid { grid-template-columns: 1fr; }
-    }
+    .rev-info h4 { font-size: 0.92rem; font-weight: 700; color: #fff; }
+    .rev-info span { font-size: 0.74rem; color: var(--gold); font-weight: 700; }
+    .rev-quote { font-size: 0.88rem; color: #cbd5e1; line-height: 1.5; }
 
     /* ─── INTERACTIVE FAQ ACCORDION ─── */
-    .faq-wrapper { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-wrapper { display: flex; flex-direction: column; gap: 12px; }
     .faq-item {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
@@ -804,175 +697,170 @@
     .faq-question {
       width: 100%;
       text-align: left;
-      padding: 20px 24px;
+      padding: 16px 18px;
       background: transparent;
       color: #fff;
-      font-size: 1.02rem;
+      font-size: 0.95rem;
       font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
     .faq-chevron {
-      width: 20px; height: 20px;
+      width: 18px; height: 18px;
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
     .faq-item.active .faq-chevron { transform: rotate(180deg); }
     .faq-answer {
       display: none;
-      padding: 0 24px 20px;
-      font-size: 0.92rem;
+      padding: 0 18px 16px;
+      font-size: 0.88rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.55;
     }
     .faq-item.active .faq-answer { display: block; }
 
-    /* ─── FOOTER & CONTACT ─── */
+    /* ─── FOOTER ─── */
     .footer {
       background: #040609;
       border-top: 1px solid var(--border-glass);
-      padding: 60px 0 30px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 40px;
+      padding: 40px 0 20px;
     }
     .footer-brand h3 {
       font-family: var(--font-heading);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
-    .footer-brand p { font-size: 0.9rem; color: var(--text-muted); max-width: 400px; }
-    .footer-col h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .footer-brand p { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 16px; }
+    .footer-contact-box {
+      background: #0c1017;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 24px;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-muted); }
     .footer-bottom {
       text-align: center;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.8rem;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.76rem;
       color: var(--text-dim);
     }
 
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-    }
-
-    /* ─── FIXED MOBILE BOTTOM ACTION BAR ─── */
+    /* ─── FIXED MOBILE BOTTOM DOCK ─── */
     .mobile-dock {
       position: fixed;
       bottom: 0; left: 0; right: 0;
       z-index: 999;
-      background: rgba(7, 9, 14, 0.92);
+      background: rgba(7, 9, 14, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid var(--border-glass);
-      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
       display: grid;
       grid-template-columns: 1fr 1.4fr;
-      gap: 12px;
+      gap: 10px;
     }
     .dock-btn-call {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid var(--border-glass);
       color: #fff;
       border-radius: var(--radius-full);
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      padding: 12px 14px;
+      padding: 12px 10px;
     }
     .dock-btn-wa {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       background: var(--whatsapp-green);
       color: #fff;
       border-radius: var(--radius-full);
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 800;
-      padding: 12px 14px;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      padding: 12px 10px;
+      box-shadow: 0 4px 18px rgba(37, 211, 102, 0.4);
     }
 
-    /* ─── MODAL (CLAIM FREE 1-DAY TRIAL PASS) ─── */
+    /* ─── MODAL (CLAIM FREE 1-DAY PASS) ─── */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
       z-index: 2000;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     .modal-overlay.open { display: flex; }
     .modal-card {
       background: #0f172a;
       border: 1px solid var(--border-focus);
       border-radius: var(--radius-lg);
-      padding: 32px;
-      max-width: 480px;
+      padding: 26px 20px;
+      max-width: 440px;
       width: 100%;
       position: relative;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9);
     }
     .modal-close {
       position: absolute;
-      top: 18px; right: 18px;
+      top: 14px; right: 16px;
       background: transparent;
       color: var(--text-muted);
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       cursor: pointer;
     }
     .modal-card h3 {
       font-family: var(--font-heading);
-      font-size: 1.6rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .modal-card p {
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
-    .modal-form { display: flex; flex-direction: column; gap: 16px; }
+    .modal-form { display: flex; flex-direction: column; gap: 14px; }
     .form-group input, .form-group select {
       width: 100%;
       background: #1e293b;
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-sm);
-      padding: 14px 16px;
+      padding: 13px 14px;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
     }
     .form-group input:focus, .form-group select:focus { border-color: var(--cyan); }
     .btn-submit-pass {
       background: linear-gradient(135deg, var(--crimson), #e11d48);
       color: #fff;
-      padding: 16px;
+      padding: 14px;
       border-radius: var(--radius-full);
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 800;
       box-shadow: var(--shadow-glow-crimson);
-      margin-top: 8px;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -983,15 +871,14 @@
     <div class="container nav-wrapper">
       <a href="#" class="nav-brand">
         <div class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M6.5 6.5h11M6 20v-2a6 6 0 0 1 12 0v2M12 4v4"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M6.5 6.5h11M6 20v-2a6 6 0 0 1 12 0v2M12 4v4"/></svg>
         </div>
         MUSCLE ZONE
       </a>
       <ul class="nav-menu">
-        <li><a href="#about" class="nav-link">About Gym</a></li>
         <li><a href="#zones" class="nav-link">Training Zones</a></li>
-        <li><a href="#calculator" class="nav-link">BMI Calculator</a></li>
-        <li><a href="#schedule" class="nav-link">Batch Timings</a></li>
+        <li><a href="#calculator" class="nav-link">BMI Engine</a></li>
+        <li><a href="#schedule" class="nav-link">Batches</a></li>
         <li><a href="#pricing" class="nav-link">Memberships</a></li>
         <li><a href="#reviews" class="nav-link">Reviews</a></li>
       </ul>
@@ -1007,68 +894,54 @@
     <div class="hero-overlay"></div>
     
     <div class="container hero-grid">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="pulse-dot"></span>
-          Suratgarh's Heavy Iron Hub · 2026 Admissions Open
-        </div>
-        <h1 class="hero-title">
-          FORGE YOUR <span class="text-glow">STRONGEST</span> PHYSIQUE IN <span class="text-red">SURATGARH</span>
-        </h1>
-        <p class="hero-desc">
-          Suratgarh's premier powerlifting & transformation studio. Plate-loaded heavy Hammer Strength machines, 10,000+ lbs Olympic iron, certified 1-on-1 coaches, and dedicated women batches.
-        </p>
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Suratgarh's Heavy Iron Hub · 2026 Admissions Open
+      </div>
+      <h1 class="hero-title">
+        FORGE YOUR <span class="text-glow">STRONGEST</span> PHYSIQUE IN <span class="text-red">SURATGARH</span>
+      </h1>
+      <p class="hero-desc">
+        Suratgarh's premier powerlifting & transformation studio. Plate-loaded heavy Hammer Strength machines, 10,000+ lbs Olympic iron, certified 1-on-1 coaches, and dedicated women batches.
+      </p>
 
-        <div class="hero-actions">
-          <button onclick="openTrialModal()" class="btn-hero-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Claim Free 1-Day Trial Pass
-          </button>
-          <a href="#pricing" class="btn-hero-secondary">
-            View Membership Plans ↓
-          </a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <h3>500+</h3>
-            <p>Active Members</p>
-          </div>
-          <div class="stat-item">
-            <h3>10,000+</h3>
-            <p>Lbs Free Iron</p>
-          </div>
-          <div class="stat-item">
-            <h3>4.9 ★</h3>
-            <p>180+ Reviews</p>
-          </div>
-          <div class="stat-item">
-            <h3>100%</h3>
-            <p>Results Driven</p>
-          </div>
-        </div>
+      <div class="hero-actions">
+        <button onclick="openTrialModal()" class="btn-hero-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Claim Free 1-Day Trial Pass
+        </button>
+        <a href="#pricing" class="btn-hero-secondary">
+          View Membership Plans ↓
+        </a>
       </div>
 
-      <!-- Right Glass Card -->
-      <div class="hero-showcase">
-        <div class="hero-showcase-img">
-          <img src="images/heavy_dumbbells.jpg" alt="Heavy Dumbbell Rack">
-          <div class="hero-showcase-tag">📍 Suratgarh (R1)</div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>500+</h3>
+          <p>Active Members</p>
         </div>
-        <div class="showcase-info">
-          <h4>Heavy Iron & Personal Coaching</h4>
-          <p>Dumbbells up to 50kg, certified form correction, and personalized micro-macro diet charts for fast muscle gain & fat loss.</p>
+        <div class="stat-item">
+          <h3>10,000+</h3>
+          <p>Lbs Free Iron</p>
+        </div>
+        <div class="stat-item">
+          <h3>4.9 ★</h3>
+          <p>180+ Reviews</p>
+        </div>
+        <div class="stat-item">
+          <h3>100%</h3>
+          <p>Results Driven</p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- 21ST.DEV MODULE: INTERACTIVE BMI & CALORIE CALCULATOR -->
+  <!-- INTERACTIVE BMI & CALORIE CALCULATOR -->
   <section id="calculator" style="background: #0a0d14;">
     <div class="container">
       <div class="section-header">
         <div class="section-pill">Interactive Fitness Engine</div>
-        <h2 class="section-title">Check Your BMI & Daily Calorie Target</h2>
+        <h2 class="section-title">Check Your BMI & Daily Calories</h2>
         <p class="section-subtitle">Slide your height and weight to calculate your body mass index and get instant custom calorie guidelines.</p>
       </div>
 
@@ -1099,7 +972,7 @@
             Recommended Daily Intake: <strong style="color:#00f0ff;">2,450 kcal</strong> with <strong style="color:#ff2a5f;">145g Protein</strong> for optimal muscle growth.
           </p>
           <a id="calc-wa-btn" href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20My%20BMI%20is%2023.5%20and%20goal%20is%20Muscle%20Gain.%20Please%20share%20custom%20diet%20chart." target="_blank" class="btn-calc-wa">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
             Get Custom Diet Plan on WhatsApp
           </a>
         </div>
@@ -1107,7 +980,7 @@
     </div>
   </section>
 
-  <!-- 6 HEAVY TRAINING ZONES (BENTO GRID WITH REAL IMAGES) -->
+  <!-- 6 HEAVY TRAINING ZONES (BESPOKE GENERATED IMAGES) -->
   <section id="zones">
     <div class="container">
       <div class="section-header">
@@ -1120,7 +993,7 @@
         <!-- Card 1 -->
         <div class="bento-card">
           <div class="bento-img-wrap">
-            <img src="images/deadlift_chalk.jpg" alt="Olympic Free Weights">
+            <img src="images/powerlifting_deadlift.jpg" alt="Olympic Powerlifting Zone">
             <div class="bento-tag">⚡ Heavy Iron</div>
           </div>
           <div class="bento-content">
@@ -1144,7 +1017,7 @@
         <!-- Card 3 -->
         <div class="bento-card">
           <div class="bento-img-wrap">
-            <img src="images/women_training.jpg" alt="Dedicated Women Zone">
+            <img src="images/women_fitness_zone.jpg" alt="Dedicated Women Zone">
             <div class="bento-tag">🌸 Women Batches</div>
           </div>
           <div class="bento-content">
@@ -1180,7 +1053,7 @@
         <!-- Card 6 -->
         <div class="bento-card">
           <div class="bento-img-wrap">
-            <img src="images/diet_nutrition.jpg" alt="Diet and Nutrition Support">
+            <img src="images/nutrition_shake.jpg" alt="Diet and Nutrition Support">
             <div class="bento-tag">🥗 Nutrition Bar</div>
           </div>
           <div class="bento-content">
@@ -1192,56 +1065,37 @@
     </div>
   </section>
 
-  <!-- BATCH TIMINGS & SCHEDULE -->
+  <!-- INTERACTIVE BATCH TIMINGS COMPONENT -->
   <section id="schedule" style="background: #0a0d14;">
     <div class="container">
       <div class="section-header">
         <div class="section-pill">Daily Schedule</div>
         <h2 class="section-title">Flexible Daily Training Batches</h2>
-        <p class="section-subtitle">Find the perfect slot that fits your college, office, or business routine.</p>
+        <p class="section-subtitle">Tap a slot below to see trainer guidance and reserve your batch pass.</p>
       </div>
 
-      <div class="batch-cards-wrap">
-        <!-- Morning Batch -->
-        <div class="batch-card">
-          <div class="batch-time">05:30 AM – 10:30 AM</div>
-          <div class="batch-name">🌅 Morning Beast & Energy Batch</div>
-          <ul class="batch-features">
-            <li><span>✓</span> Full gym access & open free weights</li>
-            <li><span>✓</span> Certified trainer on the floor</li>
-            <li><span>✓</span> Best for working professionals & students</li>
-          </ul>
-          <button onclick="openTrialModal('Morning Batch')" class="btn-plan btn-plan-secondary">Reserve Morning Slot</button>
-        </div>
+      <div class="batch-nav-tabs">
+        <button class="batch-tab-btn active" onclick="switchBatch(0, this)">🌅 Morning</button>
+        <button class="batch-tab-btn" onclick="switchBatch(1, this)">🌸 Women's</button>
+        <button class="batch-tab-btn" onclick="switchBatch(2, this)">🌆 Evening</button>
+      </div>
 
-        <!-- Women Dedicated Batch -->
-        <div class="batch-card highlight">
-          <div class="batch-time">11:00 AM – 02:00 PM</div>
-          <div class="batch-name">🌸 Special Dedicated Women Batch</div>
-          <ul class="batch-features">
-            <li><span>✓</span> Exclusively reserved for female members</li>
-            <li><span>✓</span> Female certified fitness instructor</li>
-            <li><span>✓</span> Zumba, HIIT & Strength Training</li>
-          </ul>
-          <button onclick="openTrialModal('Women Batch')" class="btn-plan btn-plan-primary">Reserve Women's Slot</button>
-        </div>
-
-        <!-- Evening Batch -->
-        <div class="batch-card">
-          <div class="batch-time">04:30 PM – 10:00 PM</div>
-          <div class="batch-name">🌆 Evening Powerlifting & Mass Batch</div>
-          <ul class="batch-features">
-            <li><span>✓</span> High-energy bodybuilding environment</li>
-            <li><span>✓</span> Spotters available for heavy PR lifts</li>
-            <li><span>✓</span> Post-workout recovery lounge</li>
-          </ul>
-          <button onclick="openTrialModal('Evening Batch')" class="btn-plan btn-plan-secondary">Reserve Evening Slot</button>
-        </div>
+      <div class="batch-display-card" id="active-batch-card">
+        <div class="batch-time-val" id="disp-batch-time">05:30 AM – 10:30 AM</div>
+        <div class="batch-title-val" id="disp-batch-title">🌅 Morning Beast & Energy Batch</div>
+        <ul class="batch-features-list" id="disp-batch-features">
+          <li><span>✓</span> Full gym access & open free weights</li>
+          <li><span>✓</span> Certified trainer on the floor for form guidance</li>
+          <li><span>✓</span> Best for working professionals & college students</li>
+        </ul>
+        <button onclick="openTrialModalFromActiveBatch()" class="btn-hero-primary" style="width:100%;font-size:0.92rem;">
+          Reserve Morning Slot on WhatsApp
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- REAL TRANSFORMATION STORIES -->
+  <!-- REAL TRANSFORMATION STORIES (BESPOKE GENERATED IMAGES) -->
   <section id="transformations">
     <div class="container">
       <div class="section-header">
@@ -1251,8 +1105,11 @@
       </div>
 
       <div class="transform-grid">
+        <!-- Male Transformation -->
         <div class="transform-card">
-          <img src="images/athlete_male.jpg" alt="Fat loss transformation" class="transform-img">
+          <div class="transform-img-wrap">
+            <img src="images/transform_male.jpg" alt="Male athletic transformation">
+          </div>
           <div class="transform-body">
             <div class="transform-stat-tag">-16 KG Fat Loss · 4 Months</div>
             <h4>Amit Sharma (Suratgarh)</h4>
@@ -1260,8 +1117,11 @@
           </div>
         </div>
 
+        <!-- Female Transformation -->
         <div class="transform-card">
-          <img src="images/athlete_female.jpg" alt="Women strength transformation" class="transform-img">
+          <div class="transform-img-wrap">
+            <img src="images/transform_female.jpg" alt="Female fitness transformation">
+          </div>
           <div class="transform-body">
             <div class="transform-stat-tag">Core Toning & Posture Fix</div>
             <h4>Pooja Verma (Adarsh Colony)</h4>
@@ -1269,8 +1129,11 @@
           </div>
         </div>
 
+        <!-- Strength PR -->
         <div class="transform-card">
-          <img src="images/deadlift_chalk.jpg" alt="Strength PR transformation" class="transform-img">
+          <div class="transform-img-wrap">
+            <img src="images/powerlifting_deadlift.jpg" alt="Strength deadlift PR">
+          </div>
           <div class="transform-body">
             <div class="transform-stat-tag">Deadlift: 120kg ➔ 210kg</div>
             <h4>Vikram Bishnoi (Suratgarh)</h4>
@@ -1281,7 +1144,7 @@
     </div>
   </section>
 
-  <!-- MEMBERSHIP PRICING -->
+  <!-- MEMBERSHIP PRICING MATRIX -->
   <section id="pricing" style="background: #0a0d14;">
     <div class="container">
       <div class="section-header">
@@ -1290,55 +1153,26 @@
         <p class="section-subtitle">No hidden admission fees. Zero lock-in. Full access to heavy iron & cardio.</p>
       </div>
 
-      <div class="pricing-grid">
-        <!-- Monthly -->
-        <div class="price-card">
-          <div class="price-header">
-            <h3>1 Month Pass</h3>
-            <div class="price-val">₹1,200 <span>/ month</span></div>
-            <div class="price-duration">Standard Flexible Plan</div>
-          </div>
-          <ul class="price-features">
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full access to all heavy iron machines</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> High-tech cardio zone access</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> General floor trainer guidance</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Locker & changing room access</li>
-          </ul>
-          <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20join%20the%201-Month%20Membership%20Plan." target="_blank" class="btn-plan btn-plan-secondary">Join Monthly Plan</a>
-        </div>
+      <div class="pricing-toggle">
+        <button class="toggle-btn" onclick="switchPricing(0, this)">1 Month</button>
+        <button class="toggle-btn active" onclick="switchPricing(1, this)">3 Mos (Pro) 🔥</button>
+        <button class="toggle-btn" onclick="switchPricing(2, this)">6 Mos (VIP)</button>
+      </div>
 
-        <!-- Quarterly (Most Popular) -->
-        <div class="price-card popular">
-          <div class="popular-tag">🔥 Most Popular</div>
-          <div class="price-header">
-            <h3>3 Months Pro</h3>
-            <div class="price-val">₹2,999 <span>/ 3 mos</span></div>
-            <div class="price-duration">Save ₹600 + Free Diet Plan</div>
-          </div>
-          <ul class="price-features">
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full access to all heavy iron machines</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Free Customized Diet & Calorie Chart</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Weekly BMI & Body Fat Tracking</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 1 Free Guest Workout Pass</li>
-          </ul>
-          <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20join%20the%203-Months%20Pro%20Plan." target="_blank" class="btn-plan btn-plan-primary">Claim 3-Month Offer</a>
-        </div>
-
-        <!-- 6 Months VIP -->
-        <div class="price-card">
-          <div class="price-header">
-            <h3>6 Months VIP</h3>
-            <div class="price-val">₹5,499 <span>/ 6 mos</span></div>
-            <div class="price-duration">Save ₹1,700 + Free Shaker</div>
-          </div>
-          <ul class="price-features">
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full VIP gym & cardio suite access</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Bi-weekly personalized macro adjustment</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Free Muscle Zone Gym Shaker Bottle</li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Priority spotter & form correction</li>
-          </ul>
-          <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20join%20the%206-Months%20VIP%20Plan." target="_blank" class="btn-plan btn-plan-secondary">Join 6-Month VIP</a>
-        </div>
+      <div class="pricing-card-spotlight" id="active-pricing-card">
+        <div class="popular-pill" id="disp-plan-badge">🔥 Most Popular Choice</div>
+        <div class="price-name-val" id="disp-plan-name">3 Months Pro Plan</div>
+        <div class="price-amount-val" id="disp-plan-amount">₹2,999 <span>/ 3 months</span></div>
+        <div class="price-benefit-tag" id="disp-plan-benefit">Save ₹600 + Free Customized Diet Chart</div>
+        <ul class="price-features-list" id="disp-plan-features">
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Full access to all heavy iron machines</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Free Customized Diet & Calorie Chart</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Weekly BMI & Body Fat Tracking</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> 1 Free Guest Workout Pass</li>
+        </ul>
+        <a id="disp-plan-btn" href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20claim%20the%203-Months%20Pro%20Plan%20offer." target="_blank" class="btn-claim-plan">
+          Claim 3-Month Offer on WhatsApp
+        </a>
       </div>
     </div>
   </section>
@@ -1348,11 +1182,11 @@
     <div class="container">
       <div class="section-header">
         <div class="section-pill">Member Testimonials</div>
-        <h2 class="section-title">Rated 4.9 ★ by 180+ Fitness Enthusiasts</h2>
+        <h2 class="section-title">Rated 4.9 ★ by 180+ Members</h2>
         <p class="section-subtitle">Real feedback from athletes, beginners, and fitness lovers in Suratgarh.</p>
       </div>
 
-      <div class="reviews-grid">
+      <div class="reviews-list">
         <div class="review-card">
           <div class="review-header">
             <div class="rev-avatar">RS</div>
@@ -1395,13 +1229,13 @@
       <div class="section-header">
         <div class="section-pill">Common Questions</div>
         <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">Got questions before visiting? Here is everything you need to know.</p>
+        <p class="section-subtitle">Got questions before visiting? Tap any question below.</p>
       </div>
 
       <div class="faq-wrapper">
         <div class="faq-item active" onclick="toggleFaq(this)">
           <button class="faq-question">
-            <span>I am a complete beginner. Will someone guide me?</span>
+            <span>I am a beginner. Will someone guide me?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
@@ -1411,7 +1245,7 @@
 
         <div class="faq-item" onclick="toggleFaq(this)">
           <button class="faq-question">
-            <span>Are there separate timings for female members?</span>
+            <span>Are there separate timings for women?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
@@ -1421,7 +1255,7 @@
 
         <div class="faq-item" onclick="toggleFaq(this)">
           <button class="faq-question">
-            <span>How do I claim my Free 1-Day Trial Pass?</span>
+            <span>How do I claim my Free 1-Day Pass?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
@@ -1444,37 +1278,21 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="container footer-grid">
+    <div class="container">
       <div class="footer-brand">
-        <h3>MUSCLE ZONE FITNESS GYM</h3>
+        <h3>MUSCLE ZONE FITNESS</h3>
         <p>Suratgarh's premier strength training, powerlifting, and body transformation destination. Built by lifters, for lifters.</p>
-        <p style="margin-top:14px;color:#00f0ff;font-weight:700;">📍 Suratgarh (R1), Rajasthan</p>
       </div>
 
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#about">About Facility</a></li>
-          <li><a href="#zones">Training Zones</a></li>
-          <li><a href="#calculator">BMI Calculator</a></li>
-          <li><a href="#schedule">Batch Timings</a></li>
-          <li><a href="#pricing">Membership Plans</a></li>
-        </ul>
+      <div class="footer-contact-box">
+        <div>📍 Location: Suratgarh (R1), Rajasthan</div>
+        <div>📞 Contact: +91 99711 20171 / 93102 65806</div>
+        <div>⏰ Hours: Mon - Sat: 5:30 AM - 10:00 PM</div>
       </div>
 
-      <div class="footer-col">
-        <h4>Contact & Hours</h4>
-        <ul>
-          <li>📞 Call: +91 99711 20171</li>
-          <li>📞 Alt: +91 93102 65806</li>
-          <li>⏰ Mon - Sat: 5:30 AM - 10:00 PM</li>
-          <li>🟢 Sunday: Sanitation & Rest</li>
-        </ul>
+      <div class="footer-bottom">
+        <p>© 2026 Muscle Zone Fitness Gym Suratgarh. All Rights Reserved.</p>
       </div>
-    </div>
-
-    <div class="container footer-bottom">
-      <p>© 2026 Muscle Zone Fitness Gym Suratgarh. All Rights Reserved. Built with Pride.</p>
     </div>
   </footer>
 
@@ -1485,7 +1303,7 @@
       Call Gym
     </a>
     <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20claim%20my%20Free%201-Day%20Trial%20Pass." target="_blank" class="dock-btn-wa">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
       Free 1-Day Pass
     </a>
   </div>
@@ -1557,7 +1375,7 @@
       }
       
       if (bmi < 18.5) {
-        badge.innerText = 'Underweight · Lean Mass Gain Needed';
+        badge.innerText = 'Underweight · Lean Mass Needed';
         badge.style.color = '#38bdf8';
         badge.style.background = 'rgba(56, 189, 248, 0.15)';
       } else if (bmi <= 24.9) {
@@ -1565,11 +1383,11 @@
         badge.style.color = '#00f0ff';
         badge.style.background = 'rgba(0, 240, 255, 0.15)';
       } else if (bmi <= 29.9) {
-        badge.innerText = 'Overweight · Fat Loss Deficit Needed';
+        badge.innerText = 'Overweight · Fat Loss Needed';
         badge.style.color = '#f59e0b';
         badge.style.background = 'rgba(245, 158, 11, 0.15)';
       } else {
-        badge.innerText = 'High Body Fat · Structured Coaching Recommended';
+        badge.innerText = 'High Body Fat · Structured Coaching';
         badge.style.color = '#ff2a5f';
         badge.style.background = 'rgba(255, 42, 95, 0.15)';
       }
@@ -1578,6 +1396,128 @@
       
       const waMsg = encodeURIComponent(`Hi Muscle Zone! My BMI is ${bmi} (${badge.innerText}) and my goal is ${currentGoal}. Please share my customized diet and workout plan.`);
       document.getElementById('calc-wa-btn').href = `https://wa.me/919971120171?text=${waMsg}`;
+    }
+
+    const batchesData = [
+      {
+        time: "05:30 AM – 10:30 AM",
+        title: "🌅 Morning Beast & Energy Batch",
+        features: [
+          "Full gym access & open free weights",
+          "Certified trainer on the floor for form guidance",
+          "Best for working professionals & college students"
+        ],
+        btnText: "Reserve Morning Slot on WhatsApp",
+        batchName: "Morning Batch"
+      },
+      {
+        time: "11:00 AM – 02:00 PM",
+        title: "🌸 Special Dedicated Women Batch",
+        features: [
+          "Exclusively reserved for female members",
+          "Female certified fitness instructor & safe environment",
+          "Zumba, HIIT, Core Toning & Weight Training"
+        ],
+        btnText: "Reserve Women's Slot on WhatsApp",
+        batchName: "Women Batch"
+      },
+      {
+        time: "04:30 PM – 10:00 PM",
+        title: "🌆 Evening Powerlifting & Mass Batch",
+        features: [
+          "High-energy bodybuilding & mass gain environment",
+          "Dedicated spotters available for heavy PR lifts",
+          "Post-workout recovery & supplement guidance"
+        ],
+        btnText: "Reserve Evening Slot on WhatsApp",
+        batchName: "Evening Batch"
+      }
+    ];
+
+    let currentBatchIndex = 0;
+
+    function switchBatch(idx, btn) {
+      currentBatchIndex = idx;
+      document.querySelectorAll('.batch-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const b = batchesData[idx];
+      document.getElementById('disp-batch-time').innerText = b.time;
+      document.getElementById('disp-batch-title').innerText = b.title;
+      
+      const listEl = document.getElementById('disp-batch-features');
+      listEl.innerHTML = b.features.map(f => `<li><span>✓</span> ${f}</li>`).join('');
+      
+      const btnEl = document.querySelector('#active-batch-card button');
+      btnEl.innerText = b.btnText;
+    }
+
+    function openTrialModalFromActiveBatch() {
+      const b = batchesData[currentBatchIndex];
+      openTrialModal(b.batchName);
+    }
+
+    const pricingData = [
+      {
+        badge: "Standard Flexible Pass",
+        name: "1 Month Pass",
+        amount: "₹1,200 <span>/ month</span>",
+        benefit: "Full gym & cardio access · Zero lock-in",
+        features: [
+          "Full access to all heavy iron machines",
+          "High-tech cardio zone access",
+          "General floor trainer guidance",
+          "Locker & changing room access"
+        ],
+        btnText: "Join Monthly Plan on WhatsApp",
+        msg: "Hi Muscle Zone! I want to join the 1-Month Membership Plan."
+      },
+      {
+        badge: "🔥 Most Popular Choice",
+        name: "3 Months Pro Plan",
+        amount: "₹2,999 <span>/ 3 months</span>",
+        benefit: "Save ₹600 + Free Customized Diet Chart",
+        features: [
+          "Full access to all heavy iron machines",
+          "Free Customized Diet & Calorie Chart",
+          "Weekly BMI & Body Fat Tracking",
+          "1 Free Guest Workout Pass"
+        ],
+        btnText: "Claim 3-Month Offer on WhatsApp",
+        msg: "Hi Muscle Zone! I want to claim the 3-Months Pro Plan offer."
+      },
+      {
+        badge: "👑 VIP Long-Term Pass",
+        name: "6 Months VIP Plan",
+        amount: "₹5,499 <span>/ 6 months</span>",
+        benefit: "Save ₹1,700 + Free Muscle Zone Shaker Bottle",
+        features: [
+          "Full VIP gym & cardio suite access",
+          "Bi-weekly personalized macro adjustment",
+          "Free Muscle Zone Gym Shaker Bottle",
+          "Priority spotter & form correction"
+        ],
+        btnText: "Claim 6-Month VIP on WhatsApp",
+        msg: "Hi Muscle Zone! I want to claim the 6-Months VIP Plan offer."
+      }
+    ];
+
+    function switchPricing(idx, btn) {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const p = pricingData[idx];
+      document.getElementById('disp-plan-badge').innerText = p.badge;
+      document.getElementById('disp-plan-name').innerText = p.name;
+      document.getElementById('disp-plan-amount').innerHTML = p.amount;
+      document.getElementById('disp-plan-benefit').innerText = p.benefit;
+      
+      const listEl = document.getElementById('disp-plan-features');
+      listEl.innerHTML = p.features.map(f => `<li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ${f}</li>`).join('');
+      
+      const btnEl = document.getElementById('disp-plan-btn');
+      btnEl.innerText = p.btnText;
+      btnEl.href = `https://wa.me/919971120171?text=${encodeURIComponent(p.msg)}`;
     }
 
     function toggleFaq(el) {
