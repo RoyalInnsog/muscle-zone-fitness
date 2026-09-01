@@ -3,13 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Muscle Zone Fitness Gym — Suratgarh's Premier Heavy Iron & Transformation Studio</title>
+    <meta name="description" content="Suratgarh's premier gym for heavy powerlifting, bodybuilding, certified personal training, dedicated women batches, and customized diet plans. Claim your Free 1-Day Trial Pass today!">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/bebas-neue@5.0.3/index.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.3/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GSAP and Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <style>
         :root {
             --fire: #FF6B1A;
@@ -17,6 +24,7 @@
             --fire-dark: #CC4400;
             --ember: #FF3D00;
             --gold: #FFB800;
+            --cyan: #00F0FF;
             --dark-1: #0A0A0A;
             --dark-2: #111111;
             --dark-3: #1A1A1A;
@@ -27,6 +35,7 @@
             --text-muted: #666666;
             --glass: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 255, 255, 0.08);
+            --fire-glow: rgba(255, 107, 26, 0.4);
         }
 
         * {
@@ -38,6 +47,7 @@
         html {
             scroll-behavior: smooth;
             overflow-x: hidden;
+            width: 100%;
         }
 
         body {
@@ -45,20 +55,30 @@
             background: var(--dark-1);
             color: var(--text-primary);
             overflow-x: hidden;
+            width: 100%;
             -webkit-font-smoothing: antialiased;
-            padding-bottom: 95px;
+            padding-bottom: 110px;
         }
 
-        /* ===== SPARKS CANVAS ===== */
-        #sparks-canvas {
+        /* ===== THREE.JS 3D BACKGROUND CANVAS ===== */
+        #three-canvas-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 1;
+            opacity: 0.65;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
             z-index: 2;
-            opacity: 0.5;
+            pointer-events: none;
+            opacity: 0.03;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* ===== NAVIGATION ===== */
@@ -73,30 +93,36 @@
             align-items: center;
             justify-content: space-between;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .nav.scrolled {
-            background: rgba(10, 10, 10, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid rgba(255, 107, 26, 0.25);
             padding: 12px 20px;
         }
 
         .nav-logo {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
+            font-size: 24px;
             letter-spacing: 3px;
             color: var(--text-primary);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .nav-logo span {
             color: var(--fire);
+            text-shadow: 0 0 15px var(--fire-glow);
         }
 
         .nav-cta {
-            padding: 10px 18px;
+            padding: 10px 20px;
             background: linear-gradient(135deg, var(--fire), var(--fire-dark));
             border: none;
             border-radius: 50px;
@@ -105,13 +131,16 @@
             font-weight: 700;
             text-decoration: none;
             letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(255, 107, 26, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 20px var(--fire-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(255, 107, 26, 0.6);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 30px rgba(255, 107, 26, 0.7);
         }
 
         /* ===== HERO ===== */
@@ -119,96 +148,85 @@
             position: relative;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 0 24px 80px;
-            overflow: hidden;
+            align-items: flex-end;
+            padding: 120px 20px 60px;
+            z-index: 10;
         }
 
         .hero-bg-img {
             position: absolute;
             inset: 0;
-            background: url('images/hero_dark_iron.jpg') center/cover no-repeat;
-            z-index: 0;
-            transform: scale(1.1);
-            transition: transform 0.3s ease;
+            background-image: url('images/hero_dark_iron.jpg');
+            background-size: cover;
+            background-position: center 25%;
+            filter: saturate(1.15) contrast(1.1);
+            z-index: -2;
+            opacity: 0.45;
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background:
-                linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.5) 40%, rgba(10, 10, 10, 0.95) 100%),
-                linear-gradient(90deg, rgba(10, 10, 10, 0.6) 0%, transparent 50%);
-            z-index: 1;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.85) 65%, #0A0A0A 100%);
+            z-index: -1;
         }
 
         .hero-content {
+            max-width: 650px;
             position: relative;
-            z-index: 10;
-            max-width: 600px;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            background: rgba(255, 107, 26, 0.15);
-            border: 1px solid rgba(255, 107, 26, 0.3);
+            background: rgba(255, 107, 26, 0.12);
+            border: 1px solid rgba(255, 107, 26, 0.35);
             border-radius: 50px;
+            padding: 6px 14px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             color: var(--fire-light);
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            backdrop-filter: blur(8px);
         }
 
         .hero-badge .dot {
-            width: 6px;
-            height: 6px;
-            background: var(--fire);
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            animation: pulse-dot 2s ease-in-out infinite;
+            background: var(--fire);
+            box-shadow: 0 0 10px var(--fire);
+            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse-dot {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.5;
-                transform: scale(1.5);
-            }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.4; }
         }
 
         .hero-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(52px, 14vw, 90px);
-            line-height: 0.92;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
         }
 
         .hero-title .highlight {
-            background: linear-gradient(135deg, var(--fire), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--fire);
+            text-shadow: 0 0 35px var(--fire-glow);
         }
 
         .hero-subtitle {
             font-size: 14px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 28px;
-            max-width: 480px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 500px;
         }
 
         .hero-actions {
@@ -217,194 +235,196 @@
             gap: 12px;
         }
 
+        @media (min-width: 480px) {
+            .hero-actions {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
         .btn-primary {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             padding: 16px 28px;
             background: linear-gradient(135deg, var(--fire), var(--fire-dark));
             border: none;
-            border-radius: 14px;
+            border-radius: 50px;
             color: white;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 800;
             text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 8px 32px rgba(255, 107, 26, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px var(--fire-glow);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: rotate(30deg);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-primary:hover::after {
+            transform: rotate(30deg) translate(50%, 50%);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 40px rgba(255, 107, 26, 0.6);
         }
 
         .btn-secondary {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 14px 24px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
+            padding: 15px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
             color: var(--text-primary);
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 107, 26, 0.4);
+            transform: translateY(-2px);
         }
 
         /* ===== STATS STRIP ===== */
         .stats-strip {
-            position: relative;
-            z-index: 10;
-            padding: 0 24px;
-            margin-top: -30px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            max-width: 600px;
+            padding: 0 20px;
+            margin: -30px auto 40px;
+            max-width: 1100px;
+            position: relative;
+            z-index: 20;
+        }
+
+        @media (min-width: 768px) {
+            .stats-strip {
+                grid-template-columns: repeat(4, 1fr);
+                margin-top: -40px;
+            }
         }
 
         .stat-card {
-            padding: 18px 16px;
-            background: rgba(26, 26, 26, 0.9);
+            background: rgba(26, 26, 26, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            backdrop-filter: blur(20px);
+            padding: 18px 14px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .stat-card:hover {
-            border-color: rgba(255, 107, 26, 0.3);
-            transform: translateY(-2px);
+            border-color: var(--fire);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 26, 0.2);
         }
 
         .stat-number {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            background: linear-gradient(135deg, var(--fire-light), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.2rem;
+            color: var(--fire-light);
             line-height: 1;
             margin-bottom: 4px;
+            letter-spacing: 1px;
         }
 
         .stat-label {
             font-size: 10px;
-            color: var(--text-muted);
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--text-muted);
         }
 
-        /* ===== SECTION COMMON ===== */
+        /* ===== HEARTBEAT DIVIDER ===== */
+        .heartbeat-divider {
+            width: 100%;
+            overflow: hidden;
+            padding: 20px 0;
+            opacity: 0.5;
+        }
+
+        .heartbeat-line {
+            stroke: var(--fire);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: dash 3s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* ===== SECTIONS GLOBAL ===== */
         .section {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
             position: relative;
             z-index: 10;
-            padding: 70px 24px;
         }
 
         .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-block;
             font-size: 11px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--fire);
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .section-label::before {
-            content: '';
-            width: 20px;
-            height: 2px;
-            background: var(--fire);
+            margin-bottom: 8px;
         }
 
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(34px, 9vw, 52px);
-            line-height: 1.05;
-            margin-bottom: 14px;
-            letter-spacing: -0.5px;
+            font-size: clamp(2.2rem, 7vw, 3.5rem);
+            line-height: 1;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
         }
 
         .section-desc {
-            font-size: 13px;
-            line-height: 1.7;
+            font-size: 14px;
             color: var(--text-secondary);
-            max-width: 500px;
+            line-height: 1.6;
             margin-bottom: 36px;
-        }
-
-        /* ===== PARALLAX IMAGE STRIP ===== */
-        .parallax-strip {
-            position: relative;
-            height: 300px;
-            overflow: hidden;
-            z-index: 10;
-        }
-
-        .parallax-strip-bg {
-            position: absolute;
-            inset: -50px 0;
-            background: url('images/hero_dark_iron.jpg') center/cover no-repeat;
-            filter: brightness(0.4) contrast(1.2);
-        }
-
-        .parallax-strip-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, var(--dark-1) 0%, transparent 20%, transparent 80%, var(--dark-1) 100%);
-        }
-
-        .parallax-strip-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 24px;
-        }
-
-        .parallax-strip-content h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(28px, 8vw, 48px);
-            line-height: 1.1;
-        }
-
-        .parallax-strip-content h2 span {
-            color: var(--fire);
+            max-width: 550px;
         }
 
         /* ===== BMI CALCULATOR ===== */
-        .bmi-section {
-            background: var(--dark-2);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
         .bmi-engine {
-            background: var(--dark-3);
+            background: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
         }
@@ -412,90 +432,67 @@
         .bmi-engine::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(255, 107, 26, 0.04) 0%, transparent 50%);
-            animation: rotate-bg 20s linear infinite;
-        }
-
-        @keyframes rotate-bg {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--fire), transparent);
         }
 
         .bmi-gauge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
-            width: 200px;
-            height: 120px;
-            margin: 0 auto 20px;
         }
 
         .gauge-svg {
-            width: 100%;
-            height: 100%;
+            width: 180px;
+            height: 100px;
         }
 
         .gauge-value {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 42px;
-            background: linear-gradient(135deg, var(--fire-light), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 3.2rem;
+            color: var(--fire-light);
+            line-height: 1;
+            margin-top: -35px;
+            letter-spacing: 1px;
         }
 
         .gauge-label {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
-            color: var(--text-secondary);
-            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--cyan);
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-top: 6px;
         }
 
         .bmi-slider-group {
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .bmi-slider-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .bmi-slider-label {
-            font-size: 12px;
-            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .bmi-slider-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
             color: var(--fire-light);
+            font-weight: 800;
         }
 
         .bmi-slider {
-            width: 100%;
             -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            background: var(--dark-5);
-            border-radius: 3px;
+            width: 100%;
+            height: 8px;
+            border-radius: 50px;
+            background: var(--dark-4);
             outline: none;
         }
 
@@ -504,218 +501,260 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
+            background: var(--fire);
+            box-shadow: 0 0 15px var(--fire-glow);
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 107, 26, 0.5);
-            border: 3px solid var(--dark-1);
+            transition: transform 0.2s ease;
         }
 
-        .bmi-slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 107, 26, 0.5);
-            border: 3px solid var(--dark-1);
+        .bmi-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
         }
 
         .goal-selector {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            margin-top: 16px;
-            position: relative;
-            z-index: 2;
         }
 
         .goal-btn {
-            padding: 10px 6px;
-            background: var(--dark-5);
+            background: var(--dark-3);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
+            padding: 12px 6px;
             color: var(--text-secondary);
-            font-size: 10px;
-            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
             transition: all 0.3s ease;
         }
 
         .goal-btn.active {
-            background: rgba(255, 107, 26, 0.12);
+            background: var(--fire);
+            color: white;
             border-color: var(--fire);
-            color: var(--fire-light);
-        }
-
-        .goal-btn .goal-icon {
-            font-size: 18px;
-            display: block;
-            margin-bottom: 3px;
+            box-shadow: 0 4px 20px var(--fire-glow);
         }
 
         .bmi-result {
-            margin-top: 20px;
-            padding: 18px;
-            background: rgba(255, 107, 26, 0.06);
-            border: 1px solid rgba(255, 107, 26, 0.2);
+            background: var(--dark-2);
+            border: 1px solid rgba(255, 107, 26, 0.3);
             border-radius: 16px;
+            padding: 20px 16px;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
         .bmi-result-text {
             font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .bmi-result-text strong {
-            color: var(--fire-light);
+            color: #E2E8F0;
+            line-height: 1.5;
+            margin-bottom: 16px;
         }
 
         .bmi-whatsapp-btn {
-            display: block;
-            margin-top: 14px;
-            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 20px;
             background: #25D366;
-            border-radius: 12px;
             color: white;
-            font-size: 12px;
-            font-weight: 700;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
             text-decoration: none;
-            text-align: center;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
             transition: all 0.3s ease;
         }
 
         .bmi-whatsapp-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
         }
 
-        /* ===== FACILITIES ===== */
+        /* ===== FACILITIES 3D TILT CARDS ===== */
         .facilities-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
+            perspective: 1200px;
+        }
+
+        @media (min-width: 640px) {
+            .facilities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 960px) {
+            .facilities-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .facility-card {
-            position: relative;
+            background: rgba(20, 20, 20, 0.85);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid var(--glass-border);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: default;
-            background: var(--dark-3);
+            backdrop-filter: blur(14px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            transform-style: preserve-3d;
         }
 
         .facility-card:hover {
-            border-color: rgba(255, 107, 26, 0.3);
-            transform: translateY(-4px);
+            border-color: var(--fire);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 107, 26, 0.25);
+        }
+
+        .facility-img-wrap {
+            width: 100%;
+            height: 210px;
+            overflow: hidden;
+            position: relative;
         }
 
         .facility-img {
             width: 100%;
-            height: 180px;
+            height: 100%;
             object-fit: cover;
-            display: block;
+            object-position: center 20%;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .facility-card:hover .facility-img {
+            transform: scale(1.08);
         }
 
         .facility-img-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 180px;
-            background: linear-gradient(180deg, transparent 40%, rgba(26, 26, 26, 0.95) 100%);
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(20, 20, 20, 0.95) 100%);
         }
 
         .facility-body {
-            padding: 20px;
+            padding: 18px;
             position: relative;
-            z-index: 2;
         }
 
         .facility-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 107, 26, 0.12);
-            border: 1px solid rgba(255, 107, 26, 0.2);
-            border-radius: 12px;
-            margin-bottom: 12px;
+            display: inline-block;
             font-size: 18px;
-        }
-
-        .facility-card h3 {
-            font-size: 15px;
-            font-weight: 700;
             margin-bottom: 6px;
         }
 
-        .facility-card p {
-            font-size: 12px;
-            line-height: 1.6;
-            color: var(--text-secondary);
+        .facility-body h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 6px;
         }
 
-        /* ===== SCHEDULE ===== */
-        .schedule-section {
-            background: var(--dark-2);
+        .facility-body p {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ===== PARALLAX STRIP ===== */
+        .parallax-strip {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
             border-top: 1px solid var(--glass-border);
             border-bottom: 1px solid var(--glass-border);
         }
 
-        .schedule-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding-bottom: 4px;
+        .parallax-strip-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('images/transform_male.jpg');
+            background-size: cover;
+            background-position: center 30%;
+            filter: contrast(1.2) brightness(0.6);
+            transform: scale(1.1);
         }
 
-        .schedule-tabs::-webkit-scrollbar {
-            display: none;
+        .parallax-strip-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(2px);
+        }
+
+        .parallax-strip-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .parallax-strip-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            letter-spacing: 3px;
+            line-height: 0.95;
+        }
+
+        .parallax-strip-content h2 span {
+            color: var(--fire);
+            text-shadow: 0 0 30px var(--fire-glow);
+        }
+
+        /* ===== SCHEDULE SECTION ===== */
+        .schedule-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            background: var(--dark-2);
+            padding: 6px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 20px;
         }
 
         .schedule-tab {
-            padding: 12px 18px;
-            background: var(--dark-4);
-            border: 1px solid var(--glass-border);
+            background: transparent;
+            border: none;
             border-radius: 50px;
-            color: var(--text-secondary);
+            padding: 10px 4px;
+            color: var(--text-muted);
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            white-space: nowrap;
             transition: all 0.3s ease;
         }
 
         .schedule-tab.active {
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
-            border-color: var(--fire);
+            background: var(--fire);
             color: white;
-            box-shadow: 0 4px 20px rgba(255, 107, 26, 0.4);
+            box-shadow: 0 4px 18px var(--fire-glow);
         }
 
         .schedule-content {
-            background: var(--dark-3);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: rgba(20, 20, 20, 0.85);
+            border: 1px solid rgba(255, 107, 26, 0.3);
+            border-radius: 24px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
         .schedule-img {
             width: 100%;
-            height: 160px;
+            height: 200px;
             object-fit: cover;
-            display: block;
+            object-position: center 20%;
         }
 
         .schedule-body {
@@ -724,322 +763,287 @@
 
         .schedule-time {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 26px;
+            font-size: 1.8rem;
             color: var(--fire-light);
+            letter-spacing: 1px;
             margin-bottom: 4px;
         }
 
         .schedule-name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
+            color: #FFFFFF;
             margin-bottom: 14px;
         }
 
         .schedule-features {
             list-style: none;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+            font-size: 13px;
+            color: #CBD5E1;
         }
 
         .schedule-features li {
             display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 6px 0;
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.5;
+            align-items: center;
+            gap: 8px;
         }
 
         .schedule-features li::before {
             content: '✓';
             color: var(--fire);
-            font-weight: 700;
-            flex-shrink: 0;
+            font-weight: 800;
         }
 
         .schedule-cta {
-            display: block;
-            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 15px;
             background: linear-gradient(135deg, var(--fire), var(--fire-dark));
-            border-radius: 12px;
+            border-radius: 50px;
             color: white;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
             text-decoration: none;
-            text-align: center;
+            box-shadow: 0 8px 25px var(--fire-glow);
             transition: all 0.3s ease;
         }
 
         .schedule-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 107, 26, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 10px 35px rgba(255, 107, 26, 0.6);
         }
 
         /* ===== TRANSFORMATIONS ===== */
-        .transform-hero {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            margin-bottom: 24px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .transform-hero-img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .transform-hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 30%, rgba(10, 10, 10, 0.95) 100%);
+        .transform-cards {
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: 24px;
-        }
-
-        .transform-hero-overlay h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            margin-bottom: 4px;
-        }
-
-        .transform-hero-overlay p {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .transform-cards {
-            display: grid;
-            grid-template-columns: 1fr;
             gap: 16px;
         }
 
         .transform-card {
-            position: relative;
-            background: var(--dark-3);
+            background: rgba(20, 20, 20, 0.85);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 24px 20px;
-            overflow: hidden;
+            border-radius: 18px;
+            padding: 20px;
+            backdrop-filter: blur(14px);
+            transition: all 0.35s ease;
         }
 
-        .transform-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(255, 107, 26, 0.12), transparent);
-            border-radius: 50%;
-            transform: translate(30%, -30%);
+        .transform-card:hover {
+            border-color: var(--fire);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .transform-stat {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
-            color: var(--fire-light);
-            margin-bottom: 4px;
+            display: inline-block;
+            background: rgba(37, 211, 102, 0.15);
+            border: 1px solid rgba(37, 211, 102, 0.4);
+            color: #25D366;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .transform-name {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 6px;
         }
 
         .transform-quote {
-            font-size: 13px;
-            line-height: 1.7;
+            font-size: 12.5px;
             color: var(--text-secondary);
+            line-height: 1.55;
             font-style: italic;
-            position: relative;
-            padding-left: 14px;
-            border-left: 2px solid var(--fire);
         }
 
-        /* ===== PRICING ===== */
-        .pricing-section {
-            background: var(--dark-2);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
+        /* ===== PRICING CARDS ===== */
         .pricing-cards {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
+            perspective: 1200px;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .pricing-card {
-            position: relative;
-            background: var(--dark-3);
+            background: rgba(20, 20, 20, 0.85);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 28px 20px;
-            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
         .pricing-card.featured {
             border-color: var(--fire);
-            background: linear-gradient(180deg, rgba(255, 107, 26, 0.08), var(--dark-3));
-            box-shadow: 0 0 60px rgba(255, 107, 26, 0.12);
+            background: rgba(35, 20, 15, 0.88);
+            box-shadow: 0 0 40px rgba(255, 107, 26, 0.3);
+            transform: scale(1.02);
         }
 
-        .pricing-card.featured::before {
-            content: ' MOST POPULAR';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 6px 16px;
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
-            border-radius: 50px;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            white-space: nowrap;
+        .pricing-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: var(--fire);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px var(--fire-glow);
         }
 
         .pricing-duration {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #FFFFFF;
             margin-bottom: 6px;
         }
 
         .pricing-price {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 40px;
+            font-size: 2.8rem;
+            color: var(--fire-light);
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
         }
 
         .pricing-price span {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
         }
 
         .pricing-save {
             font-size: 11px;
+            font-weight: 700;
             color: var(--gold);
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .pricing-features {
             list-style: none;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 26px;
+            font-size: 12.5px;
+            color: #CBD5E1;
+            flex-grow: 1;
         }
 
         .pricing-features li {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 7px 0;
-            font-size: 12px;
-            color: var(--text-secondary);
+            gap: 8px;
         }
 
         .pricing-features li::before {
-            content: '';
-            width: 18px;
-            height: 18px;
-            background: rgba(255, 107, 26, 0.12);
-            border: 1px solid rgba(255, 107, 26, 0.3);
-            border-radius: 50%;
-            flex-shrink: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23FF6B1A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: center;
+            content: '✓';
+            color: var(--fire);
+            font-weight: 800;
         }
 
         .pricing-cta {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
             padding: 14px;
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
-            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
             color: white;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
             text-decoration: none;
-            text-align: center;
             transition: all 0.3s ease;
         }
 
-        .pricing-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(255, 107, 26, 0.4);
+        .pricing-card.featured .pricing-cta {
+            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
+            box-shadow: 0 6px 25px var(--fire-glow);
         }
 
-        /* ===== REVIEWS ===== */
+        .pricing-cta:hover {
+            background: var(--fire);
+            border-color: var(--fire);
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px var(--fire-glow);
+        }
+
+        /* ===== TESTIMONIALS ===== */
         .reviews-scroll {
             display: flex;
+            flex-direction: column;
             gap: 14px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding-bottom: 16px;
-            scroll-snap-type: x mandatory;
-        }
-
-        .reviews-scroll::-webkit-scrollbar {
-            display: none;
         }
 
         .review-card {
-            min-width: 280px;
-            max-width: 280px;
-            padding: 24px 20px;
-            background: var(--dark-3);
+            background: rgba(20, 20, 20, 0.85);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            scroll-snap-align: start;
-            flex-shrink: 0;
+            border-radius: 18px;
+            padding: 20px;
+            backdrop-filter: blur(14px);
         }
 
         .review-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .review-avatar {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
+            color: white;
+            font-weight: 800;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            color: white;
         }
 
         .review-name {
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
+            color: #FFFFFF;
         }
 
         .review-rating {
             font-size: 11px;
             color: var(--gold);
+            font-weight: 700;
         }
 
         .review-text {
-            font-size: 12px;
-            line-height: 1.7;
+            font-size: 12.5px;
             color: var(--text-secondary);
-            font-style: italic;
+            line-height: 1.55;
         }
 
-        /* ===== FAQ ===== */
+        /* ===== FAQ ACCORDION ===== */
         .faq-list {
             display: flex;
             flex-direction: column;
@@ -1047,67 +1051,56 @@
         }
 
         .faq-item {
-            background: var(--dark-3);
+            background: rgba(20, 20, 20, 0.85);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease;
         }
 
         .faq-item.open {
-            border-color: rgba(255, 107, 26, 0.25);
+            border-color: rgba(255, 107, 26, 0.4);
         }
 
         .faq-question {
+            padding: 18px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 20px;
+            font-size: 13.5px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            gap: 12px;
+            color: #FFFFFF;
         }
 
         .faq-toggle {
-            width: 26px;
-            height: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--dark-5);
-            border-radius: 50%;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            color: var(--text-secondary);
+            font-size: 18px;
+            color: var(--fire);
+            transition: transform 0.3s ease;
         }
 
         .faq-item.open .faq-toggle {
-            background: var(--fire);
-            color: white;
             transform: rotate(45deg);
         }
 
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: max-height 0.35s ease;
         }
 
         .faq-answer-inner {
             padding: 0 20px 18px;
-            font-size: 12px;
-            line-height: 1.7;
+            font-size: 13px;
             color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* ===== FOOTER ===== */
         .footer {
-            position: relative;
-            z-index: 10;
-            padding: 60px 24px 120px;
+            background: #050505;
             border-top: 1px solid var(--glass-border);
+            padding: 40px 20px 20px;
             text-align: center;
         }
 
@@ -1115,7 +1108,8 @@
             font-family: 'Bebas Neue', sans-serif;
             font-size: 26px;
             letter-spacing: 3px;
-            margin-bottom: 12px;
+            color: white;
+            margin-bottom: 8px;
         }
 
         .footer-logo span {
@@ -1123,80 +1117,86 @@
         }
 
         .footer-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 400px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            max-width: 450px;
             margin: 0 auto 20px;
+            line-height: 1.5;
         }
 
         .footer-info {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 28px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
         }
 
         .footer-copy {
             font-size: 11px;
-            color: var(--text-muted);
+            color: #444444;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* ===== FLOATING BUTTONS ===== */
+        /* ===== FLOATING ACTIONS (MOBILE) ===== */
         .floating-actions {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
+            bottom: 0;
+            left: 0;
+            right: 0;
             z-index: 999;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 10px;
         }
 
         .float-btn {
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 14px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 700;
+            gap: 6px;
+            padding: 12px 10px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
             text-decoration: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
+            transition: transform 0.2s ease;
+        }
+
+        .float-btn:active {
+            transform: scale(0.96);
         }
 
         .float-btn-call {
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--glass-border);
             color: white;
         }
 
         .float-btn-pass {
-            background: linear-gradient(135deg, var(--fire), var(--fire-dark));
+            background: #25D366;
             color: white;
-            box-shadow: 0 8px 32px rgba(255, 107, 26, 0.4);
-        }
-
-        .float-btn:hover {
-            transform: translateY(-3px);
+            box-shadow: 0 4px 18px rgba(37, 211, 102, 0.4);
         }
 
         /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
             display: none;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
-            padding: 24px;
+            padding: 16px;
         }
 
         .modal-overlay.active {
@@ -1204,196 +1204,100 @@
         }
 
         .modal {
-            background: var(--dark-2);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px 24px 0 0;
+            background: #141414;
+            border: 1px solid rgba(255, 107, 26, 0.4);
+            border-radius: 24px;
             padding: 28px 20px;
+            max-width: 440px;
             width: 100%;
-            max-width: 480px;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
         .modal-close {
             position: absolute;
             top: 14px;
-            right: 14px;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--dark-4);
+            right: 16px;
+            background: transparent;
             border: none;
-            border-radius: 50%;
-            color: var(--text-secondary);
-            font-size: 18px;
+            color: var(--text-muted);
+            font-size: 24px;
             cursor: pointer;
         }
 
         .modal-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 26px;
-            margin-bottom: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: white;
         }
 
         .modal-desc {
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--text-secondary);
-            margin-bottom: 20px;
-            line-height: 1.6;
+            line-height: 1.5;
+            margin-top: -6px;
         }
 
-        .modal-input {
+        .modal-input, .modal-select {
             width: 100%;
-            padding: 14px 16px;
-            background: var(--dark-4);
+            background: #222222;
             border: 1px solid var(--glass-border);
             border-radius: 12px;
+            padding: 13px 14px;
             color: white;
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 13.5px;
             outline: none;
-            transition: border-color 0.3s ease;
         }
 
-        .modal-input:focus {
+        .modal-input:focus, .modal-select:focus {
             border-color: var(--fire);
         }
 
-        .modal-select {
-            width: 100%;
-            padding: 14px 16px;
-            background: var(--dark-4);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            color: white;
-            font-size: 13px;
-            margin-bottom: 18px;
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
         .modal-submit {
-            width: 100%;
-            padding: 16px;
             background: linear-gradient(135deg, var(--fire), var(--fire-dark));
             border: none;
-            border-radius: 14px;
+            border-radius: 50px;
+            padding: 14px;
             color: white;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px var(--fire-glow);
+            margin-top: 4px;
         }
 
-        .modal-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(255, 107, 26, 0.4);
-        }
-
-        /* ===== HEARTBEAT ===== */
-        .heartbeat-divider {
-            width: 100%;
-            height: 40px;
-            position: relative;
-            z-index: 10;
-            overflow: hidden;
-            opacity: 0.3;
-        }
-
-        .heartbeat-line {
-            stroke: var(--fire);
-            stroke-width: 2;
-            fill: none;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: draw-line 3s ease-in-out infinite;
-        }
-
-        @keyframes draw-line {
-            0% {
-                stroke-dashoffset: 1000;
-            }
-
-            50% {
-                stroke-dashoffset: 0;
-            }
-
-            100% {
-                stroke-dashoffset: -1000;
-            }
-        }
-
-        /* ===== SCROLL REVEAL ===== */
+        /* ===== REVEAL ANIMATIONS ===== */
         .reveal {
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .js-loaded .reveal:not(.visible) {
+            opacity: 0.15;
+            transform: translateY(20px);
         }
 
         .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== NOISE ===== */
-        .noise-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0.02;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 256px 256px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (min-width: 768px) {
-            .facilities-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .transform-cards {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .pricing-cards {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .stats-strip {
-                grid-template-columns: repeat(4, 1fr);
-                max-width: 100%;
-            }
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
     </style>
 </head>
 
 <body>
+    <!-- Three.js 3D Floating Particles & Wireframe Geometry Container -->
+    <div id="three-canvas-container"></div>
     <div class="noise-overlay"></div>
-    <canvas id="sparks-canvas"></canvas>
 
     <!-- Navigation -->
     <nav class="nav" id="mainNav">
         <a href="#" class="nav-logo">MUSCLE <span>ZONE</span></a>
-        <a href="#" class="nav-cta" onclick="openModal(); return false;">Free Pass</a>
+        <a href="#" class="nav-cta" onclick="openModal(); return false;">🎟️ Free Pass</a>
     </nav>
 
     <!-- Hero Section -->
@@ -1426,11 +1330,11 @@
     <!-- Stats Strip -->
     <div class="stats-strip reveal">
         <div class="stat-card">
-            <div class="stat-number" data-target="500">0</div>
+            <div class="stat-number" data-target="500">500+</div>
             <div class="stat-label">Active Members</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number" data-target="10000">0</div>
+            <div class="stat-number" data-target="10000">10,000+</div>
             <div class="stat-label">Lbs Free Iron</div>
         </div>
         <div class="stat-card">
@@ -1508,7 +1412,7 @@
         </div>
     </section>
 
-    <!-- Facilities Section -->
+    <!-- Facilities Section (3D Tilt Effect Enabled) -->
     <section class="section" id="zones">
         <div class="reveal">
             <span class="section-label">World-Class Facilities</span>
@@ -1517,70 +1421,75 @@
             </p>
         </div>
         <div class="facilities-grid">
-            <div class="facility-card reveal">
-                <img src="images/powerlifting_deadlift.jpg"
-                    alt="Heavy Iron Gym" class="facility-img" loading="lazy">
-                <div class="facility-img-overlay"></div>
+            <div class="facility-card tilt-card reveal">
+                <div class="facility-img-wrap">
+                    <img src="images/powerlifting_deadlift.jpg" alt="Olympic Powerlifting Zone" class="facility-img" loading="lazy">
+                    <div class="facility-img-overlay"></div>
+                </div>
                 <div class="facility-body">
                     <div class="facility-icon">⚡</div>
                     <h3>Olympic Powerlifting Zone</h3>
-                    <p>Deadlift platforms, Olympic competition barbells, calibrated steel plates, and chalk bowls for
-                        serious powerlifters.</p>
+                    <p>Deadlift platforms, Olympic competition barbells, calibrated steel plates, and chalk bowls for serious powerlifters.</p>
                 </div>
             </div>
-            <div class="facility-card reveal">
-                <img src="images/trainer_coach.jpg"
-                    alt="Personal Training" class="facility-img" loading="lazy">
-                <div class="facility-img-overlay"></div>
+
+            <div class="facility-card tilt-card reveal">
+                <div class="facility-img-wrap">
+                    <img src="images/trainer_coach.jpg" alt="Certified 1-on-1 Coaching" class="facility-img" loading="lazy">
+                    <div class="facility-img-overlay"></div>
+                </div>
                 <div class="facility-body">
                     <div class="facility-icon">🎯</div>
                     <h3>Certified 1-on-1 Coaching</h3>
-                    <p>Personal posture assessment, daily workout tracking, form correction, and progressive overload
-                        programming.</p>
+                    <p>Personal posture assessment, daily workout tracking, form correction, and progressive overload programming.</p>
                 </div>
             </div>
-            <div class="facility-card reveal">
-                <img src="images/hammer_strength.jpg"
-                    alt="Hammer Strength Machines" class="facility-img" loading="lazy">
-                <div class="facility-img-overlay"></div>
+
+            <div class="facility-card tilt-card reveal">
+                <div class="facility-img-wrap">
+                    <img src="images/hammer_strength.jpg" alt="Hammer Strength Machines" class="facility-img" loading="lazy">
+                    <div class="facility-img-overlay"></div>
+                </div>
                 <div class="facility-body">
                     <div class="facility-icon">🔥</div>
                     <h3>Hammer Strength Machines</h3>
-                    <p>Biomechanically engineered plate-loaded chest presses, hack squats, and lat pull downs to
-                        maximize hypertrophy.</p>
+                    <p>Biomechanically engineered plate-loaded chest presses, hack squats, and lat pull downs to maximize hypertrophy.</p>
                 </div>
             </div>
-            <div class="facility-card reveal">
-                <img src="images/women_fitness_zone.jpg"
-                    alt="Women Fitness" class="facility-img" loading="lazy">
-                <div class="facility-img-overlay"></div>
+
+            <div class="facility-card tilt-card reveal">
+                <div class="facility-img-wrap">
+                    <img src="images/women_fitness_zone.jpg" alt="Dedicated Women Fitness" class="facility-img" loading="lazy">
+                    <div class="facility-img-overlay"></div>
+                </div>
                 <div class="facility-body">
                     <div class="facility-icon">🌸</div>
                     <h3>Dedicated Women Fitness</h3>
-                    <p>Private & secure morning/afternoon batches with female trainers, kettlebell circuits, and core
-                        toning sessions.</p>
+                    <p>Private & secure morning/afternoon batches with female trainers, kettlebell circuits, and core toning sessions.</p>
                 </div>
             </div>
-            <div class="facility-card reveal">
-                <img src="images/cardio_treadmills.jpg"
-                    alt="Cardio Suite" class="facility-img" loading="lazy">
-                <div class="facility-img-overlay"></div>
+
+            <div class="facility-card tilt-card reveal">
+                <div class="facility-img-wrap">
+                    <img src="images/cardio_treadmills.jpg" alt="High-Tech Cardio Suite" class="facility-img" loading="lazy">
+                    <div class="facility-img-overlay"></div>
+                </div>
                 <div class="facility-body">
                     <div class="facility-icon">🏃</div>
                     <h3>High-Tech Cardio Suite</h3>
-                    <p>Commercial motorized treadmills, spin bikes, cross trainers, and rowing machines for rapid
-                        stamina & fat loss.</p>
+                    <p>Commercial motorized treadmills, spin bikes, cross trainers, and rowing machines for rapid stamina & fat loss.</p>
                 </div>
             </div>
-            <div class="facility-card reveal">
-                <img src="images/nutrition_shake.jpg"
-                    alt="Nutrition Advisory" class="facility-img" loading="lazy">
-                <div class="facility-img-overlay"></div>
+
+            <div class="facility-card tilt-card reveal">
+                <div class="facility-img-wrap">
+                    <img src="images/nutrition_shake.jpg" alt="Diet & Supplement Advisory" class="facility-img" loading="lazy">
+                    <div class="facility-img-overlay"></div>
+                </div>
                 <div class="facility-body">
                     <div class="facility-icon">🥗</div>
                     <h3>Diet & Supplement Advisory</h3>
-                    <p>Macro-calculated vegetarian and non-veg diet charts, authentic whey protein shakes, and
-                        supplement guidance.</p>
+                    <p>Macro-calculated vegetarian and non-veg diet charts, authentic whey protein shakes, and supplement guidance.</p>
                 </div>
             </div>
         </div>
@@ -1604,13 +1513,12 @@
         </div>
         <div class="reveal">
             <div class="schedule-tabs">
-                <button class="schedule-tab active" onclick="switchSchedule(0, this)"> Morning</button>
+                <button class="schedule-tab active" onclick="switchSchedule(0, this)">🌅 Morning</button>
                 <button class="schedule-tab" onclick="switchSchedule(1, this)">🌸 Women's</button>
                 <button class="schedule-tab" onclick="switchSchedule(2, this)">🌆 Evening</button>
             </div>
             <div class="schedule-content" id="scheduleContent">
-                <img src="images/powerlifting_deadlift.jpg"
-                    alt="Morning Batch" class="schedule-img" id="scheduleImg" loading="lazy">
+                <img src="images/powerlifting_deadlift.jpg" alt="Morning Batch" class="schedule-img" id="scheduleImg" loading="lazy">
                 <div class="schedule-body">
                     <div class="schedule-time" id="scheduleTime">05:30 AM – 10:30 AM</div>
                     <div class="schedule-name" id="scheduleName">🌅 Morning Beast & Energy Batch</div>
@@ -1631,35 +1539,23 @@
         <div class="reveal">
             <span class="section-label">Proof of Results</span>
             <h2 class="section-title">Real Suratgarh<br>Transformations</h2>
-            <p class="section-desc">Ordinary people achieving extraordinary results under Muscle Zone's coaching
-                protocol.</p>
-        </div>
-        <div class="transform-hero reveal">
-            <img src="images/transform_male.jpg"
-                alt="Transformation" class="transform-hero-img" loading="lazy">
-            <div class="transform-hero-overlay">
-                <h3>FROM ORDINARY TO <span style="color: var(--fire);">EXTRAORDINARY</span></h3>
-                <p>Real members. Real results. Real commitment.</p>
-            </div>
+            <p class="section-desc">Ordinary people achieving extraordinary results under Muscle Zone's coaching protocol.</p>
         </div>
         <div class="transform-cards">
-            <div class="transform-card reveal">
+            <div class="transform-card tilt-card reveal">
                 <div class="transform-stat">-16 KG Fat Loss · 4 Months</div>
                 <div class="transform-name">Amit Sharma (Suratgarh)</div>
-                <p class="transform-quote">"I lost 16kg and gained visible abs in 4 months with the trainer's custom
-                    diet chart and heavy lifting routine."</p>
+                <p class="transform-quote">"I lost 16kg and gained visible abs in 4 months with the trainer's custom diet chart and heavy lifting routine."</p>
             </div>
-            <div class="transform-card reveal">
+            <div class="transform-card tilt-card reveal">
                 <div class="transform-stat">Core Toning & Posture Fix</div>
                 <div class="transform-name">Pooja Verma (Adarsh Colony)</div>
-                <p class="transform-quote">"The women's batch gave me the confidence and safe space to lift weights. My
-                    stamina and strength have doubled!"</p>
+                <p class="transform-quote">"The women's batch gave me the confidence and safe space to lift weights. My stamina and strength have doubled!"</p>
             </div>
-            <div class="transform-card reveal">
+            <div class="transform-card tilt-card reveal">
                 <div class="transform-stat">Deadlift: 120kg ➔ 210kg</div>
                 <div class="transform-name">Vikram Bishnoi (Suratgarh)</div>
-                <p class="transform-quote">"Best powerlifting setup in town. The heavy Olympic plates and coaching
-                    helped me hit my lifetime deadlift PR."</p>
+                <p class="transform-quote">"Best powerlifting setup in town. The heavy Olympic plates and coaching helped me hit my lifetime deadlift PR."</p>
             </div>
         </div>
     </section>
@@ -1672,20 +1568,21 @@
             <p class="section-desc">No hidden admission fees. Zero lock-in. Full access to heavy iron & cardio.</p>
         </div>
         <div class="pricing-cards">
-            <div class="pricing-card reveal">
+            <div class="pricing-card tilt-card reveal">
                 <div class="pricing-duration">1 Month</div>
-                <div class="pricing-price">₹1,299 <span>/ month</span></div>
-                <div class="pricing-save">Try before you commit</div>
+                <div class="pricing-price">₹1,200 <span>/ month</span></div>
+                <div class="pricing-save">Standard Flexible Pass</div>
                 <ul class="pricing-features">
                     <li>Full access to all heavy iron machines</li>
-                    <li>Basic workout guidance</li>
+                    <li>High-tech cardio zone access</li>
+                    <li>General floor trainer guidance</li>
                     <li>Locker & changing room access</li>
                 </ul>
                 <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20the%201-Month%20Plan."
                     class="pricing-cta">Get Started →</a>
             </div>
-            <div class="pricing-card featured reveal">
-                <div class="pricing-duration">3 Months Pro</div>
+            <div class="pricing-card featured tilt-card reveal">
+                <div class="pricing-duration">3 Months Pro 🔥</div>
                 <div class="pricing-price">₹2,999 <span>/ 3 months</span></div>
                 <div class="pricing-save">Save ₹600 + Free Customized Diet Chart</div>
                 <ul class="pricing-features">
@@ -1697,15 +1594,15 @@
                 <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20claim%20the%203-Months%20Pro%20Plan%20offer."
                     class="pricing-cta">Claim 3-Month Offer on WhatsApp</a>
             </div>
-            <div class="pricing-card reveal">
+            <div class="pricing-card tilt-card reveal">
                 <div class="pricing-duration">6 Months VIP</div>
-                <div class="pricing-price">₹4,999 <span>/ 6 months</span></div>
-                <div class="pricing-save">Save ₹2,800 + Free Personal Training Sessions</div>
+                <div class="pricing-price">₹5,499 <span>/ 6 months</span></div>
+                <div class="pricing-save">Save ₹1,700 + Free Muscle Zone Shaker</div>
                 <ul class="pricing-features">
-                    <li>Everything in Pro Plan</li>
-                    <li>4 Free Personal Training Sessions</li>
-                    <li>Priority equipment access</li>
-                    <li>Free supplement consultation</li>
+                    <li>Full VIP gym & cardio suite access</li>
+                    <li>Bi-weekly personalized macro adjustments</li>
+                    <li>Free Muscle Zone Gym Shaker Bottle</li>
+                    <li>Priority spotter & form correction</li>
                 </ul>
                 <a href="https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20the%206-Months%20VIP%20Plan."
                     class="pricing-cta">Claim VIP Plan →</a>
@@ -1729,30 +1626,27 @@
                         <div class="review-rating">★★★★★ 5.0</div>
                     </div>
                 </div>
-                <p class="review-text">"Best gym in Suratgarh hands down. The machines are smooth, heavy weights are
-                    always organized, and the trainers actually pay attention to your form."</p>
+                <p class="review-text">"Best gym in Suratgarh hands down. The machines are smooth, heavy weights are always organized, and the trainers actually pay attention to your form."</p>
             </div>
             <div class="review-card">
                 <div class="review-header">
-                    <div class="review-avatar">SK</div>
+                    <div class="review-avatar" style="background:linear-gradient(135deg,#FF3D00,#CC4400)">SK</div>
                     <div>
                         <div class="review-name">Simran Kaur</div>
                         <div class="review-rating">★★★★★ 5.0</div>
                     </div>
                 </div>
-                <p class="review-text">"The dedicated afternoon women's batch is amazing. Very comfortable environment,
-                    female coach, and great cleanliness. Highly recommend to all ladies!"</p>
+                <p class="review-text">"The dedicated afternoon women's batch is amazing. Very comfortable environment, female coach, and great cleanliness. Highly recommend to all ladies!"</p>
             </div>
             <div class="review-card">
                 <div class="review-header">
-                    <div class="review-avatar">MK</div>
+                    <div class="review-avatar" style="background:linear-gradient(135deg,#FFB800,#FF6B1A)">MK</div>
                     <div>
                         <div class="review-name">Mohit Kumar</div>
                         <div class="review-rating">★★★★★ 5.0</div>
                     </div>
                 </div>
-                <p class="review-text">"Joined on the 3-month pro plan and already lost 8kg. The diet chart given by the
-                    trainer was super practical and easy to follow at home."</p>
+                <p class="review-text">"Joined on the 3-month pro plan and already lost 8kg. The diet chart given by the trainer was super practical and easy to follow at home."</p>
             </div>
         </div>
     </section>
@@ -1765,15 +1659,13 @@
             <p class="section-desc">Got questions before visiting? Tap any question below.</p>
         </div>
         <div class="faq-list reveal">
-            <div class="faq-item">
+            <div class="faq-item open">
                 <div class="faq-question" onclick="toggleFaq(this)">
                     <span>I am a beginner. Will someone guide me?</span>
                     <div class="faq-toggle">+</div>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">Yes! Our certified floor trainers are present in all batches to teach
-                        you proper machine usage, correct lifting postures, and basic warmup drills so you never feel
-                        lost or risk injury.</div>
+                <div class="faq-answer" style="max-height: 200px;">
+                    <div class="faq-answer-inner">Yes! Our certified floor trainers are present in all batches to teach you proper machine usage, correct lifting postures, and basic warmup drills so you never feel lost or risk injury.</div>
                 </div>
             </div>
             <div class="faq-item">
@@ -1782,9 +1674,7 @@
                     <div class="faq-toggle">+</div>
                 </div>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Yes, we have a dedicated women's batch from 11:00 AM to 2:00 PM daily
-                        with certified female fitness instructors, focused on strength conditioning, core, and cardio.
-                    </div>
+                    <div class="faq-answer-inner">Yes, we have a dedicated women's batch from 11:00 AM to 2:00 PM daily with certified female fitness instructors, focused on strength conditioning, core, and cardio.</div>
                 </div>
             </div>
             <div class="faq-item">
@@ -1793,9 +1683,7 @@
                     <div class="faq-toggle">+</div>
                 </div>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Simply click the 'Free 1-Day Pass' button on this page, enter your
-                        name and batch preference, and you will receive an instant WhatsApp confirmation code to show at
-                        the front counter.</div>
+                    <div class="faq-answer-inner">Simply click the 'Free 1-Day Pass' button on this page, enter your name and batch preference, and you will receive an instant WhatsApp confirmation code to show at the front counter.</div>
                 </div>
             </div>
             <div class="faq-item">
@@ -1804,8 +1692,7 @@
                     <div class="faq-toggle">+</div>
                 </div>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Muscle Zone Fitness is open Monday through Saturday from 5:30 AM to
-                        10:00 PM. Sundays are reserved for deep sanitation and recovery.</div>
+                    <div class="faq-answer-inner">Muscle Zone Fitness is open Monday through Saturday from 5:30 AM to 10:00 PM. Sundays are reserved for deep sanitation and recovery.</div>
                 </div>
             </div>
         </div>
@@ -1814,8 +1701,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-logo">MUSCLE <span>ZONE</span> FITNESS</div>
-        <p class="footer-desc">Suratgarh's premier strength training, powerlifting, and body transformation destination.
-            Built by lifters, for lifters.</p>
+        <p class="footer-desc">Suratgarh's premier strength training, powerlifting, and body transformation destination. Built by lifters, for lifters.</p>
         <div class="footer-info">
             <span>📍 Location: Suratgarh (R1), Rajasthan</span>
             <span>📞 Contact: +91 99711 20171 / 93102 65806</span>
@@ -1824,13 +1710,13 @@
         <p class="footer-copy">© 2026 Muscle Zone Fitness Gym Suratgarh. All Rights Reserved.</p>
     </footer>
 
-    <!-- Floating Actions -->
+    <!-- Floating Mobile Actions -->
     <div class="floating-actions">
         <a href="tel:+919971120171" class="float-btn float-btn-call">
             📞 Call Gym
         </a>
         <a href="#" class="float-btn float-btn-pass" onclick="openModal(); return false;">
-            ️ Free 1-Day Pass
+            🎟️ Free 1-Day Pass
         </a>
     </div>
 
@@ -1839,89 +1725,122 @@
         <div class="modal" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <h3 class="modal-title">Claim Free 1-Day Trial</h3>
-            <p class="modal-desc">Experience our heavy iron equipment & coaching for free before taking a membership.
-            </p>
+            <p class="modal-desc">Experience our heavy iron equipment & coaching for free before taking a membership.</p>
             <input type="text" class="modal-input" placeholder="Your Name" id="modalName">
-            <input type="tel" class="modal-input" placeholder="Phone Number" id="modalPhone">
+            <input type="tel" class="modal-input" placeholder="WhatsApp Number" id="modalPhone">
             <select class="modal-select" id="modalBatch">
-                <option value="">Select Preferred Batch</option>
                 <option value="Morning Batch (5:30 AM - 10:30 AM)">Morning Batch (5:30 AM - 10:30 AM)</option>
-                <option value="Special Women Batch (11:00 AM - 2:00 PM)">Special Women Batch (11:00 AM - 2:00 PM)
-                </option>
+                <option value="Special Women Batch (11:00 AM - 2:00 PM)">Special Women Batch (11:00 AM - 2:00 PM)</option>
                 <option value="Evening Mass Batch (4:30 PM - 10:00 PM)">Evening Mass Batch (4:30 PM - 10:00 PM)</option>
             </select>
             <button class="modal-submit" onclick="submitPass()">Get Instant WhatsApp Pass 🎟️</button>
         </div>
     </div>
 
+    <!-- ===== JAVASCRIPT & THREE.JS 3D INTERACTIVITY ===== -->
     <script>
-        // ===== SPARKS PARTICLE SYSTEM =====
-        const canvas = document.getElementById('sparks-canvas');
-        const ctx = canvas.getContext('2d');
-        let sparks = [];
+        // ===== THREE.JS 3D PARTICLES & FLOATING IRON MESH =====
+        (function initThreeJS() {
+            const container = document.getElementById('three-canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
 
-        class Spark {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + 10;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedY = -(Math.random() * 1.5 + 0.5);
-                this.speedX = (Math.random() - 0.5) * 0.8;
-                this.opacity = Math.random() * 0.8 + 0.2;
-                this.life = Math.random() * 200 + 100;
-                this.maxLife = this.life;
-                this.color = Math.random() > 0.5 ? '#FF6B1A' : '#FFB800';
+            // Glowing Floating Ember Particles
+            const particleCount = window.innerWidth < 640 ? 70 : 160;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const scales = new Float32Array(particleCount);
+
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 80;
+                positions[i + 1] = (Math.random() - 0.5) * 80;
+                positions[i + 2] = (Math.random() - 0.5) * 60;
+                scales[i / 3] = Math.random() * 2 + 1;
             }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life--;
-                this.opacity = (this.life / this.maxLife) * 0.6;
-                if (this.life <= 0 || this.y < -10) this.reset();
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xFF6B1A,
+                size: 0.8,
+                transparent: true,
+                opacity: 0.75,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // 3D Geometric Ring Torus
+            const torusGeo = new THREE.TorusGeometry(12, 0.4, 16, 100);
+            const torusMat = new THREE.MeshBasicMaterial({ 
+                color: 0xFF3D00, 
+                wireframe: true, 
+                transparent: true, 
+                opacity: 0.18 
+            });
+            const torus = new THREE.Mesh(torusGeo, torusMat);
+            torus.position.set(18, 5, -15);
+            scene.add(torus);
+
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.y += 0.0012;
+                particles.rotation.x += 0.0006;
+
+                torus.rotation.x += 0.003;
+                torus.rotation.y += 0.004;
+
+                camera.position.x += (mouseX * 4 - camera.position.x) * 0.05;
+                camera.position.y += (-mouseY * 4 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
             }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = this.opacity;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-        }
+            animate();
+        })();
 
-        for (let i = 0; i < 35; i++) { sparks.push(new Spark()); }
+        // ===== 3D CARD TILT HOVER EFFECTS =====
+        (function initTiltEffects() {
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (centerY - y) / 14;
+                    const rotateY = (x - centerX) / 14;
 
-        function animateSparks() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            sparks.forEach(spark => { spark.update(); spark.draw(); });
-            requestAnimationFrame(animateSparks);
-        }
-        animateSparks();
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+                });
 
-        // ===== NAVIGATION SCROLL =====
-        const nav = document.getElementById('mainNav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 50);
-        });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+                });
+            });
+        })();
 
-        // ===== PARALLAX HERO =====
-        const heroBg = document.getElementById('heroBg');
-        const parallaxBg = document.getElementById('parallaxBg');
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            if (heroBg) heroBg.style.transform = `scale(1.1) translateY(${scrollY * 0.3}px)`;
-            if (parallaxBg) parallaxBg.style.transform = `translateY(${(scrollY - parallaxBg.parentElement.offsetTop) * 0.2}px)`;
-        });
-
-        // ===== BMI CALCULATOR =====
+        // ===== BMI ENGINE CALCULATION =====
         const heightSlider = document.getElementById('heightSlider');
         const weightSlider = document.getElementById('weightSlider');
         const heightValue = document.getElementById('heightValue');
@@ -1931,24 +1850,27 @@
         const bmiResultText = document.getElementById('bmiResultText');
         const bmiWhatsappBtn = document.getElementById('bmiWhatsappBtn');
         const gaugeArc = document.getElementById('gaugeArc');
+
         let currentGoal = 'muscle';
 
         function calculateBMI() {
-            const height = heightSlider.value / 100;
+            const height = heightSlider.value;
             const weight = weightSlider.value;
-            const bmi = (weight / (height * height)).toFixed(1);
-
-            heightValue.textContent = heightSlider.value + ' cm';
+            heightValue.textContent = height + ' cm';
             weightValue.textContent = weight + ' kg';
+
+            const heightM = height / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
             bmiDisplay.textContent = bmi;
 
             const bmiNum = parseFloat(bmi);
-            let gaugePercent = 0, category = '';
+            let category = 'Normal';
+            let gaugePercent = 0.5;
 
-            if (bmiNum < 18.5) { gaugePercent = bmiNum / 40; category = 'Underweight'; }
+            if (bmiNum < 18.5) { gaugePercent = bmiNum / 40; category = 'Underweight · Lean Mass Needed'; }
             else if (bmiNum < 25) { gaugePercent = bmiNum / 40; category = 'Normal & Athletic Range'; }
-            else if (bmiNum < 30) { gaugePercent = bmiNum / 40; category = 'Overweight'; }
-            else { gaugePercent = Math.min(bmiNum / 40, 1); category = "Obese - Let's Fix This!"; }
+            else if (bmiNum < 30) { gaugePercent = bmiNum / 40; category = 'Overweight · Fat Loss Plan'; }
+            else { gaugePercent = Math.min(bmiNum / 40, 1); category = "High Body Fat · Coaching Needed"; }
 
             gaugeArc.style.strokeDashoffset = 251 - (251 * gaugePercent);
             bmiCategory.textContent = category;
@@ -1971,7 +1893,7 @@
             }
 
             const goalText = currentGoal === 'muscle' ? 'Muscle Gain' : currentGoal === 'fat' ? 'Fat Loss' : 'Strength PR';
-            bmiWhatsappBtn.href = `https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20My%20BMI%20is%20${bmi}%20and%20goal%20is%20${goalText}.%20Please%20share%20custom%20diet%20chart.`;
+            bmiWhatsappBtn.href = `https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20My%20BMI%20is%20${bmi}%20(${category})%20and%20goal%20is%20${goalText}.%20Please%20share%20custom%20diet%20chart.`;
         }
 
         heightSlider.addEventListener('input', calculateBMI);
@@ -1997,7 +1919,7 @@
                 img: 'images/powerlifting_deadlift.jpg'
             },
             {
-                time: '11:00 AM – 2:00 PM',
+                time: '11:00 AM – 02:00 PM',
                 name: "🌸 Special Women's Fitness Batch",
                 features: ['Exclusive women-only training environment', 'Certified female fitness instructor', 'Focus on strength, core toning & cardio'],
                 cta: "Reserve Women's Slot on WhatsApp",
@@ -2052,8 +1974,8 @@
             document.body.style.overflow = '';
         }
         function submitPass() {
-            const name = document.getElementById('modalName').value;
-            const phone = document.getElementById('modalPhone').value;
+            const name = document.getElementById('modalName').value.trim();
+            const phone = document.getElementById('modalPhone').value.trim();
             const batch = document.getElementById('modalBatch').value;
             if (!name || !phone || !batch) { alert('Please fill all fields'); return; }
             const msg = `Hi Muscle Zone! I want to claim my Free 1-Day Trial Pass.%0A%0AName: ${name}%0APhone: ${phone}%0ABatch: ${batch}`;
@@ -2061,11 +1983,27 @@
             closeModal();
         }
 
-        // ===== SCROLL REVEAL =====
+        // ===== SCROLL REVEAL & NAVBAR =====
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
         const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach(el => el.classList.add('visible'));
+
         const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible'); 
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+        
         revealElements.forEach(el => revealObserver.observe(el));
 
         // ===== ANIMATED COUNTERS =====
@@ -2083,20 +2021,21 @@
 
         function animateCounter(element, target) {
             let current = 0;
-            const increment = target / 60;
+            const increment = target / 50;
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) { current = target; clearInterval(timer); }
                 element.textContent = (target >= 1000 ? Math.round(current).toLocaleString() : Math.round(current)) + '+';
-            }, 20);
+            }, 25);
         }
 
         // ===== GSAP HERO ANIMATION =====
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
-        gsap.from('.hero-title', { opacity: 0, y: 40, duration: 1, delay: 0.4, ease: 'power3.out' });
-        gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.8, delay: 0.8 });
-        gsap.from('.hero-actions', { opacity: 0, y: 20, duration: 0.8, delay: 1 });
+        if (typeof gsap !== 'undefined') {
+            gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
+            gsap.from('.hero-title', { opacity: 0, y: 40, duration: 1, delay: 0.4, ease: 'power3.out' });
+            gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.8, delay: 0.8 });
+            gsap.from('.hero-actions', { opacity: 0, y: 20, duration: 0.8, delay: 1 });
+        }
     </script>
 </body>
 
