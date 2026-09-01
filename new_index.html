@@ -46,7 +46,6 @@
             color: var(--text-primary);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            padding-bottom: 95px;
         }
 
         /* ===== SPARKS CANVAS ===== */
@@ -128,7 +127,7 @@
         .hero-bg-img {
             position: absolute;
             inset: 0;
-            background: url('images/hero_dark_iron.jpg') center/cover no-repeat;
+            background: url('https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1c22c6973-335b-40d6-8a43-5fd438157986.png') center/cover no-repeat;
             z-index: 0;
             transform: scale(1.1);
             transition: transform 0.3s ease;
@@ -362,7 +361,7 @@
         .parallax-strip-bg {
             position: absolute;
             inset: -50px 0;
-            background: url('images/hero_dark_iron.jpg') center/cover no-repeat;
+            background: url('https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/132d2bbb9-d867-48d5-9345-2fc5baf701d5.png') center/cover no-repeat;
             filter: brightness(0.4) contrast(1.2);
         }
 
@@ -1342,9 +1341,9 @@
 
         /* ===== SCROLL REVEAL ===== */
         .reveal {
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .reveal.visible {
@@ -1518,7 +1517,7 @@
         </div>
         <div class="facilities-grid">
             <div class="facility-card reveal">
-                <img src="images/powerlifting_deadlift.jpg"
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1c22c6973-335b-40d6-8a43-5fd438157986.png"
                     alt="Heavy Iron Gym" class="facility-img" loading="lazy">
                 <div class="facility-img-overlay"></div>
                 <div class="facility-body">
@@ -1529,7 +1528,7 @@
                 </div>
             </div>
             <div class="facility-card reveal">
-                <img src="images/trainer_coach.jpg"
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1d5b5461b-feeb-42bb-8bdc-297b650dd3e7.png"
                     alt="Personal Training" class="facility-img" loading="lazy">
                 <div class="facility-img-overlay"></div>
                 <div class="facility-body">
@@ -1540,8 +1539,8 @@
                 </div>
             </div>
             <div class="facility-card reveal">
-                <img src="images/hammer_strength.jpg"
-                    alt="Hammer Strength Machines" class="facility-img" loading="lazy">
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/132d2bbb9-d867-48d5-9345-2fc5baf701d5.png"
+                    alt="Transformation" class="facility-img" loading="lazy">
                 <div class="facility-img-overlay"></div>
                 <div class="facility-body">
                     <div class="facility-icon">🔥</div>
@@ -1551,8 +1550,9 @@
                 </div>
             </div>
             <div class="facility-card reveal">
-                <img src="images/women_fitness_zone.jpg"
-                    alt="Women Fitness" class="facility-img" loading="lazy">
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/132d2bbb9-d867-48d5-9345-2fc5baf701d5.png"
+                    alt="Women Fitness" class="facility-img" loading="lazy"
+                    style="filter: hue-rotate(300deg) saturate(0.8);">
                 <div class="facility-img-overlay"></div>
                 <div class="facility-body">
                     <div class="facility-icon">🌸</div>
@@ -1562,8 +1562,9 @@
                 </div>
             </div>
             <div class="facility-card reveal">
-                <img src="images/cardio_treadmills.jpg"
-                    alt="Cardio Suite" class="facility-img" loading="lazy">
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/132d2bbb9-d867-48d5-9345-2fc5baf701d5.png"
+                    alt="Cardio" class="facility-img" loading="lazy"
+                    style="filter: hue-rotate(200deg) brightness(0.9);">
                 <div class="facility-img-overlay"></div>
                 <div class="facility-body">
                     <div class="facility-icon">🏃</div>
@@ -1573,8 +1574,9 @@
                 </div>
             </div>
             <div class="facility-card reveal">
-                <img src="images/nutrition_shake.jpg"
-                    alt="Nutrition Advisory" class="facility-img" loading="lazy">
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1c22c6973-335b-40d6-8a43-5fd438157986.png"
+                    alt="Nutrition" class="facility-img" loading="lazy"
+                    style="filter: hue-rotate(60deg) brightness(0.85);">
                 <div class="facility-img-overlay"></div>
                 <div class="facility-body">
                     <div class="facility-icon">🥗</div>
@@ -1609,7 +1611,7 @@
                 <button class="schedule-tab" onclick="switchSchedule(2, this)">🌆 Evening</button>
             </div>
             <div class="schedule-content" id="scheduleContent">
-                <img src="images/powerlifting_deadlift.jpg"
+                <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1c22c6973-335b-40d6-8a43-5fd438157986.png"
                     alt="Morning Batch" class="schedule-img" id="scheduleImg" loading="lazy">
                 <div class="schedule-body">
                     <div class="schedule-time" id="scheduleTime">05:30 AM – 10:30 AM</div>
@@ -1635,7 +1637,7 @@
                 protocol.</p>
         </div>
         <div class="transform-hero reveal">
-            <img src="images/transform_male.jpg"
+            <img src="https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/132d2bbb9-d867-48d5-9345-2fc5baf701d5.png"
                 alt="Transformation" class="transform-hero-img" loading="lazy">
             <div class="transform-hero-overlay">
                 <h3>FROM ORDINARY TO <span style="color: var(--fire);">EXTRAORDINARY</span></h3>
@@ -1994,7 +1996,7 @@
                 features: ['Full gym access & open free weights', 'Certified trainer on the floor for form guidance', 'Best for working professionals & college students'],
                 cta: 'Reserve Morning Slot on WhatsApp',
                 link: 'https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20reserve%20the%20Morning%20Batch.',
-                img: 'images/powerlifting_deadlift.jpg'
+                img: 'https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1c22c6973-335b-40d6-8a43-5fd438157986.png'
             },
             {
                 time: '11:00 AM – 2:00 PM',
@@ -2002,7 +2004,7 @@
                 features: ['Exclusive women-only training environment', 'Certified female fitness instructor', 'Focus on strength, core toning & cardio'],
                 cta: "Reserve Women's Slot on WhatsApp",
                 link: "https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20reserve%20the%20Women%27s%20Batch.",
-                img: 'images/women_fitness_zone.jpg'
+                img: 'https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/132d2bbb9-d867-48d5-9345-2fc5baf701d5.png'
             },
             {
                 time: '04:30 PM – 10:00 PM',
@@ -2010,7 +2012,7 @@
                 features: ['Peak energy hours for maximum lifts', 'Group training atmosphere & motivation', 'Trainer-assisted heavy compound movements'],
                 cta: 'Reserve Evening Slot on WhatsApp',
                 link: 'https://wa.me/919971120171?text=Hi%20Muscle%20Zone!%20I%20want%20to%20reserve%20the%20Evening%20Batch.',
-                img: 'images/hero_dark_iron.jpg'
+                img: 'https://image.qwenlm.ai/public_source/f5d27705-a30b-493e-adae-623decf67628/1d5b5461b-feeb-42bb-8bdc-297b650dd3e7.png'
             }
         ];
 
